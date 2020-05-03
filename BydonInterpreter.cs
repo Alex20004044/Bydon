@@ -10,11 +10,19 @@ namespace TestHime
     public class BydonInterpreter
     {
         Dictionary<string, VariableType> globalVarTable = new Dictionary<string, VariableType>();
-
+        int errorCounter = 1;
         public void Interpret(ParseResult parseResult)
         {
             int result = Process(parseResult.Root);
-            Console.WriteLine(result);
+            if(errorCounter == 1)
+            {
+                Console.WriteLine("Succesful compilation");
+            }
+            else
+            {
+                Console.WriteLine("Error compilation");
+            }
+            Console.WriteLine("Result" + result);
         }
         int Process(ASTNode node)
         {
@@ -22,17 +30,70 @@ namespace TestHime
             {
                 return Convert32To10(node.Value);
             }
+
+
+
+            else if(node.Symbol.ID == BydonLexer.ID.TerminalVariable)
+            {
+                VariableType variableType;
+                if(globalVarTable.TryGetValue(node.Value, out variableType))
+                {
+                    return variableType.value;
+                }
+                else
+                {
+                    //Error
+                    PrintError("Variable " + node.Value + " is undefined");
+                    return int.MaxValue;
+                }
+            }
+            //Variable construction
             else if(node.Symbol.ID == BydonParser.ID.VariableVariableInit)
             {
                 VariableType variableType;
-                variableType.typename = node.Children[0].Value;
-                variableType.value = Process(node.Children[2]);
-                string varName = node.Children[1].Value;
+                int exp = Process(node.Children[node.Children.Count - 1]);
+                for (int i = 1; i < node.Children.Count - 1; i++)
+                {
+                    variableType.typename = node.Children[0].Value;
+                    variableType.value = exp;
+                    string varName = node.Children[i].Value;
 
-                globalVarTable.Add(varName, variableType);
-
-                return variableType.value;
+                    if (globalVarTable.ContainsKey(varName))
+                    {
+                        //Error
+                        PrintError(varName + " variable already exists. Second initializtion is canceled. ");
+                    }
+                    else
+                    {
+                        globalVarTable.Add(varName, variableType);
+                    }
+                }
+                return exp;
             }
+            //Function process
+            else if(node.Symbol.ID == BydonParser.ID.VariableFunction)
+            {
+                Process(node.Children[0]);
+                return int.MinValue;
+            }
+            //Statement list process 
+            else if (node.Symbol.ID == BydonParser.ID.VariableStatementList)
+            {
+                for(int i = 0; i < node.Children.Count; i++)
+                {
+                    Process(node.Children[i]);
+                }
+                return int.MinValue;
+            }
+            //Statement process
+            else if(node.Symbol.ID == BydonParser.ID.VariableStatement)
+            {
+
+                Process(node.Children[0]);
+                
+                return int.MinValue;
+            }
+
 
             switch (node.Symbol.Name)
             {
@@ -188,6 +249,11 @@ namespace TestHime
             public string typename;
             public int value;
         }
-
+        
+        void PrintError(string message)
+        {
+            Console.WriteLine(errorCounter + ")" + message);
+            errorCounter++;
+        }
     }
 }

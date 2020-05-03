@@ -3,13 +3,13 @@ grammar Bydon
 	options
     {
         // The Axiom option specifies the top rule for the grammar.
-        Axiom = "exp";
+		Axiom = "function";
         // The Separator option specifies the separator terminal (usually white space).
         Separator = "SEPARATOR";
     }
     terminals
     {
-        WHITE_SPACE -> U+0020 | U+0009 | U+000B | U+000C ;
+        WHITE_SPACE -> U+0020 | U+0009 | U+000B | U+000C | '\r\n';
         SEPARATOR -> WHITE_SPACE+;
 		
         NUMBER -> ([1-9A-V] [0-9A-V]* | '0') ;
@@ -36,7 +36,8 @@ grammar Bydon
     rules
     {
         exp_atom -> NUMBER^
-                    | '('! exp^ ')'!;
+                    | '('! exp^ ')'!
+					| variable^;
         exp_factor -> exp_atom^
                     | exp_factor '*'^ exp_atom
                     | exp_factor '/'^ exp_atom ;
@@ -59,10 +60,17 @@ grammar Bydon
 		
 		
 		variable_type -> TINY^ | SMALL^ | NORMAL^ | BIG^ | FIELD^;
-		variable_init -> variable_type VARIABLE '<<'! exp_compare;
-		variable -> variable_init^;
 		
-        exp -> exp_compare^ | variable^;					
+		exp -> exp_compare^  | variable_init^ ;	
+		
+		variable_init -> variable_type VARIABLE+ '<<'! exp;
+		variable -> variable_init^ | VARIABLE^;
+		
+
+		statement -> exp;
+		statement_list -> (statement ','!)* statement '.'!;
+		
+		function -> statement_list;		
     }
 
 }
