@@ -1,0 +1,68 @@
+grammar Bydon
+{
+	options
+    {
+        // The Axiom option specifies the top rule for the grammar.
+        Axiom = "exp";
+        // The Separator option specifies the separator terminal (usually white space).
+        Separator = "SEPARATOR";
+    }
+    terminals
+    {
+        WHITE_SPACE -> U+0020 | U+0009 | U+000B | U+000C ;
+        SEPARATOR -> WHITE_SPACE+;
+		
+        NUMBER -> ([1-9A-V] [0-9A-V]* | '0') ;
+		VARIABLE -> [a-z'_'][0-9a-zA-Z'_']* ;
+		
+		TINY -> 'tiny' | 'tin' | 'ti' | 't';
+		SMALL -> 'small' | 'smal' | 'sma' | 'sm';
+		NORMAL -> 'normal' | 'norma' | 'norm' | 'nor' | 'no' | 'n';
+		BIG -> 'big' | 'bi' | 'b';
+		FIELD -> 'field' | 'fiel' | 'fie' | 'fi' | 'f';
+		
+		DO -> 'do' | 'd';
+		UNTIL -> 'until' | 'unti' | 'unt' | 'un' | 'u';
+		CHECK -> 'check' | 'chec' | 'che' | 'ch' | 'c';
+		
+		GO -> 'go' | 'g';
+		RL -> 'rl';
+		RR -> 'rr';
+		SONAR -> 'sonar' | 'sona' | 'son' | 'so';
+		
+		RETURN -> 'return' | 'retur' | 'retu' | 'ret' | 're';
+    }
+    
+    rules
+    {
+        exp_atom -> NUMBER^
+                    | '('! exp^ ')'!;
+        exp_factor -> exp_atom^
+                    | exp_factor '*'^ exp_atom
+                    | exp_factor '/'^ exp_atom ;
+		
+		exp_resfactor -> '-'^ exp_factor 
+					| '+'^ exp_factor 
+					| exp_factor^;
+        exp_term -> exp_resfactor^
+                    | exp_term '+'^ exp_resfactor
+                    | exp_term '-'^ exp_resfactor ;
+		
+		exp_compare -> exp_term ^
+					| exp_compare '<'^ exp_term
+					| exp_compare '>'^ exp_term
+					| exp_compare '<='^ exp_term
+					| exp_compare '>='^ exp_term
+					| exp_compare '='^ exp_term
+					| exp_compare '<>'^ exp_term;
+		
+		
+		
+		variable_type -> TINY^ | SMALL^ | NORMAL^ | BIG^ | FIELD^;
+		variable_init -> variable_type VARIABLE '<<'! exp_compare;
+		variable -> variable_init^;
+		
+        exp -> exp_compare^ | variable^;					
+    }
+
+}

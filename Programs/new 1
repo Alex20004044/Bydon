@@ -1,0 +1,43 @@
+grammar Bydon
+{
+	options
+    {
+        // The Axiom option specifies the top rule for the grammar.
+        Axiom = "exp";
+        // The Separator option specifies the separator terminal (usually white space).
+        Separator = "SEPARATOR";
+    }
+    terminals
+    {
+        WHITE_SPACE -> U+0020 | U+0009 | U+000B | U+000C ;
+        SEPARATOR -> WHITE_SPACE+;
+		
+        NUMBER -> ([1-9A-V] [0-9A-V]* | '0') ;
+		VARIABLE -> [a-z'_'][0-9a-zA-Z'_']* ;
+    }
+    
+    rules
+    {
+        exp_atom -> NUMBER^
+                    | '('! exp^ ')'! 
+					| "-"exp^;
+        exp_factor -> exp_atom^
+                    | exp_factor '*'^ exp_atom
+                    | exp_factor '/'^ exp_atom ;
+        exp_term -> exp_factor^
+                    | exp_term '+'^ exp_factor
+                    | exp_term '-'^ exp_factor ;
+		exp_uminus -> '-'^ exp_term;
+		
+		exp_resterm -> exp_uminus^ | exp_term^;
+		
+        exp -> exp_resterm^
+					| exp_resterm '<'^ exp_resterm
+					| exp_resterm '>'^ exp_resterm
+					|exp_resterm '<='^ exp_resterm
+					|exp_resterm '>='^ exp_resterm;
+					
+					
+    }
+
+}

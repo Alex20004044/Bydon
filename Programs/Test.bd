@@ -1,0 +1,47 @@
+
+
+big main() << +0
+	tiny tvar << 0,
+	small svar << -F,
+	normal nvar << A3,
+	big bvar << +A2,
+	
+	field small tiny fvar << 0,
+
+	svar << fvar[0 1],
+	fvar[0 1] << nvar >> bvar,
+	
+	fvar [1 1] << (1 + R3) / 0DF,
+	
+	fvar [2 1] << 1 > 0,
+	
+	small s2var << +s2var,
+	
+	check s2var + 1 do
+		s2var << F.
+	,
+	0 >> bvar,
+	until nvar do
+		nvar << nvar - 1,
+		bvar + 1 >> bvar.
+	,
+	tvar << Invert(tvar),
+	Invert(bvar / 0 + tvar) >> bvar,
+	
+	rr, rr, rl, tvat << go(),
+	svar << sonar(),
+	s2var << compass(),
+	
+	//Comment
+	print(bvar), // For debug
+	
+	return bvar.
+	
+	
+	
+	
+tiny Invert(tiny tvar << 0) << 0
+	check tvar do
+		return 0.
+	return 1.
+		

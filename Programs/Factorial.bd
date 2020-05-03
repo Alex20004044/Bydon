@@ -1,0 +1,20 @@
+
+
+big 0 main()
+	normal nvar << 9,
+	
+	big fact << Factorial(nvar),
+	
+	print(fact),
+	return 0.
+	
+	
+big 0 Factorial(normal nvar << 0)
+	big result << 1,
+	normal multiplyer << 1,
+	until nvar do
+		result << result * multiplyer,
+		multiplyer << multiplyer + 1,
+		nvar << nvar - 1.
+	,
+	return result.

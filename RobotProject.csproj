@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TestHime</RootNamespace>
+    <AssemblyName>TestHime</AssemblyName>
+    <!-- change this to netcoreapp2.0 for a .Net Core application -->
+    <TargetFrameworks>net461</TargetFrameworks>
+    <Version>1.0.0</Version>
+    </PropertyGroup>
+    <ItemGroup>
+        <!-- so that MathExpLexer.bin MathExpParser.bin are included -->
+        <EmbeddedResource Include="*.bin" />
+    </ItemGroup>
+    <ItemGroup>
+        <!-- reference to the .Net runtime for generated parsers -->
+        <PackageReference Include="Hime.Redist" Version="3.4.0"/>
+    </ItemGroup>
+</Project>

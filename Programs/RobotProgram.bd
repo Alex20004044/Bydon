@@ -1,0 +1,100 @@
+// Bitmap: forward = 0, lf = 1, rf = 2, lb = 3, rb = 4
+
+big 0 main()
+	//Choose main direction
+	small rots = WhereRotate(compass()),
+	until rots do
+		check rots > 0 do
+			rl(),
+			rots << rots - 1.
+		,
+		check rots < 0 do
+			rr(),
+			rots << rots + 1.
+		.
+	,
+	//Try to find exit
+	big counter << +0, 
+	small sonarResult << 0,
+	small isNeedBreak,
+	until 1 do
+		sonarResult = sonar(),
+		isNeedBreak << +0,
+		check Invert(GetBit(sonarResult, 2)) do
+			check counter > 0 do
+				rr(),
+				counter << counter - 1,
+				isNeedBreak << -16.
+			.
+		,
+		//Check is can move forward
+		check Invert(GetBit(sonarResult, 0) + isNeedBreak) do
+			go(),
+			isNeedBreak << -16.
+		,
+		//Left turn if can't do another action
+		check isNeedBreak >= 0 do
+			rl(),
+			counter << counter + 1,
+			isNeedBreak << -16.
+		.
+	.
+		
+
+tiny Invert(tiny bit << 0)
+	check bit do
+		return 0.
+	,
+	return 1.
+
+small 0 GetBit(small a << 0,small number << 0)
+	check number < 0 do
+		retutn -1.
+	,
+	check number >= 5 do
+		retutn -1.
+	,
+	until number > 0 do
+		a << a / 2,
+		number << number -1.
+	,
+	retutn IsEvenSmall(a).
+	
+
+tiny 0 IsEvenSmall(small number << 0)
+		check number >= 16 do
+			number << number - 16.
+		,
+		check number >= 8 do
+			number << number - 8.
+		,
+		check number >= 4 do
+			number << number - 4.
+		,
+		check number >= 2 do
+			number << number - 2.
+		,
+		
+		check number = 1 do
+			retutn 1.
+		,
+		retutn 0.
+		
+normal 0+ MinToDeg(big min << +0)
+	retutn min / 60.
+
+small 0+ WhereRotate(big min << 0)	
+	small udeg << MinToDeg(+min),
+	small rots << 0,
+	
+	until udeg >= 60 do
+		rots << rots + 1,
+		udeg << udeg - 60.
+	,
+	check min >= 0 do
+		retutn rots.
+	,
+	check min < 0 do
+		retutn -rots.
+	.
+	
