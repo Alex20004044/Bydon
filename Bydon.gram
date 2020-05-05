@@ -3,7 +3,7 @@ grammar Bydon
 	options
     {
         // The Axiom option specifies the top rule for the grammar.
-		Axiom = "function";
+		Axiom = "program";
         // The Separator option specifies the separator terminal (usually white space).
         Separator = "SEPARATOR";
     }
@@ -30,24 +30,32 @@ grammar Bydon
 		RR -> 'rr';
 		SONAR -> 'sonar' | 'sona' | 'son' | 'so';
 		
+		PRINT -> 'print';
+		
 		RETURN -> 'return' | 'retur' | 'retu' | 'ret' | 're';
     }
     
     rules
     {
-        exp_atom -> NUMBER^
-                    | '('! exp^ ')'!
-					| variable^;
-        exp_factor -> exp_atom^
-                    | exp_factor '*'^ exp_atom
-                    | exp_factor '/'^ exp_atom ;
+
+		function_call -> VARIABLE function_call_args;
 		
-		exp_resfactor -> '-'^ exp_factor 
-					| '+'^ exp_factor 
-					| exp_factor^;
-        exp_term -> exp_resfactor^
-                    | exp_term '+'^ exp_resfactor
-                    | exp_term '-'^ exp_resfactor ;
+        exp_atom -> NUMBER^
+					| VARIABLE^
+                    | exp_bracket^
+					| function_call^;
+
+		exp_resatom -> '-'^ exp_atom
+					| '+'^ exp_atom
+					| exp_atom^;
+					
+        exp_factor -> exp_resatom^
+                    | exp_factor '*'^ exp_resatom
+                    | exp_factor '/'^ exp_resatom ;
+
+        exp_term -> exp_factor^
+                    | exp_term '+'^ exp_factor
+                    | exp_term '-'^ exp_factor ;
 		
 		exp_compare -> exp_term ^
 					| exp_compare '<'^ exp_term
@@ -55,22 +63,29 @@ grammar Bydon
 					| exp_compare '<='^ exp_term
 					| exp_compare '>='^ exp_term
 					| exp_compare '='^ exp_term
-					| exp_compare '<>'^ exp_term;
+					| exp_compare '<>'^ exp_term;		
+		
+		exp -> exp_compare^ | SONAR^ | GO^ ;	
+		exp_bracket -> '('! exp^ ')'!;
 		
 		
+		function_call_args -> '('! (exp_atom*) ')'! | exp_bracket;
 		
-		variable_type -> TINY^ | SMALL^ | NORMAL^ | BIG^ | FIELD^;
-		
-		exp -> exp_compare^  | variable_init^ ;	
-		
+		variable_type -> TINY^ | SMALL^ | NORMAL^ | BIG^ | FIELD^;	
 		variable_init -> variable_type VARIABLE+ '<<'! exp;
-		variable -> variable_init^ | VARIABLE^;
 		
-
-		statement -> exp;
+		
+		
+		statement -> RETURN^ exp | exp ^ | variable_init^ | PRINT^ exp | function_call^ ;
 		statement_list -> (statement ','!)* statement '.'!;
 		
-		function -> statement_list;		
+		parametre -> variable_init^;
+		
+		function_parametres -> '('! parametre* ')'!;
+		
+		function_define -> variable_type VARIABLE function_parametres '<<'! exp_resatom statement_list;	
+		
+		program -> (function_define+);
     }
 
 }

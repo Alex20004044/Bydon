@@ -1,0 +1,38 @@
+big main() << 0
+	tiny tvar << 1,
+	print tvar,
+	print tvar + 1,
+	print tvar*2,
+	print -tvar,
+	print tvar + tvar,
+	print 1 + tvar,
+	print tvar / 2 + 4,
+	
+	small svar << 1,
+	print svar,
+	print svar + 1,
+	print svar*2,
+	print -svar,
+	print svar + svar,
+	print 1 + svar,
+	print svar / 2 + 4,
+	
+	normal nvar << 1,
+	print nvar,
+	print nvar + 1,
+	print nvar*2,
+	print -nvar,
+	print nvar + nvar,
+	print 1 + nvar,
+	print nvar / 2 + 4,
+	
+	big bvar << 1,
+	print bvar,
+	print bvar + 1,
+	print bvar*2,
+	print -bvar,
+	print bvar + bvar,
+	print 1 + bvar,
+	print bvar / 2 + 4,
+	
+	return 0.
