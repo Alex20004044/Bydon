@@ -6,12 +6,12 @@ namespace TestHime
 {
     class Program
     {
-        static public bool isAutoTest = true;
+        static public int isAutoTest = 0;
         
-        static public int testCount = 3;
+        static public int testCount = 5;
         public static void Main(string[] args)
         {
-            if(isAutoTest)
+            if(isAutoTest == 1)
             {
                 string basePath = @"D:\Bydon\Programs\ParserTest_";
                 for (int i = 0; i < testCount; i++)

@@ -1,0 +1,102 @@
+Name: Bydon
+Options:
+	Axiom = "program"
+	Separator = "SEPARATOR"
+Terminals:
+	__T0000 = -
+	__T0001 = +
+	__T0002 = *
+	__T0003 = /
+	__T0004 = <
+	__T0005 = >
+	__T0006 = <=
+	__T0007 = >=
+	__T0008 = =
+	__T0009 = <>
+	__T000A = (
+	__T000B = )
+	__T000C = >>
+	__T000D = <<
+	__T000E = ,
+	__T000F = .
+	BIG = BIG
+	CHECK = CHECK
+	DO = DO
+	FIELD = FIELD
+	GO = GO
+	NORMAL = NORMAL
+	NUMBER = NUMBER
+	PRINT = PRINT
+	RETURN = RETURN
+	RL = RL
+	RR = RR
+	SEPARATOR = SEPARATOR
+	SMALL = SMALL
+	SONAR = SONAR
+	TINY = TINY
+	UNTIL = UNTIL
+	VARIABLE = VARIABLE
+	WHITE_SPACE = WHITE_SPACE
+Rules:
+	__V55 -> exp_atom
+	__V55 -> __V55 exp_atom
+	__V56 -> VARIABLE
+	__V56 -> __V56 VARIABLE
+	__V58 -> statement ,!
+	__V58 -> __V58 statement ,!
+	__V60 -> parametre
+	__V60 -> __V60 parametre
+	__V61 -> function_define
+	__V61 -> __V61 function_define
+	__VAxiom -> program^ $!
+	exp -> exp_compare^
+	exp -> SONAR^
+	exp -> GO^
+	exp_atom -> NUMBER^
+	exp_atom -> VARIABLE^
+	exp_atom -> exp_bracket^
+	exp_atom -> function_call^
+	exp_bracket -> (! exp^ )!
+	exp_compare -> exp_term^
+	exp_compare -> exp_compare <^ exp_term
+	exp_compare -> exp_compare >^ exp_term
+	exp_compare -> exp_compare <=^ exp_term
+	exp_compare -> exp_compare >=^ exp_term
+	exp_compare -> exp_compare =^ exp_term
+	exp_compare -> exp_compare <>^ exp_term
+	exp_factor -> exp_resatom^
+	exp_factor -> exp_factor *^ exp_resatom
+	exp_factor -> exp_factor /^ exp_resatom
+	exp_resatom -> -^ exp_atom
+	exp_resatom -> +^ exp_atom
+	exp_resatom -> exp_atom^
+	exp_term -> exp_factor^
+	exp_term -> exp_term +^ exp_factor
+	exp_term -> exp_term -^ exp_factor
+	function_call -> VARIABLE function_call_args
+	function_call_args -> (! )!
+	function_call_args -> (! __V55 )!
+	function_call_args -> exp_bracket
+	function_define -> variable_type VARIABLE function_parametres <<! exp_resatom statement_list
+	function_parametres -> (! )!
+	function_parametres -> (! __V60 )!
+	parametre -> variable_init^
+	program -> __V61
+	statement -> RETURN^ exp
+	statement -> exp^
+	statement -> variable_init^
+	statement -> PRINT^ exp
+	statement_list -> statement .!
+	statement_list -> __V58 statement .!
+	variable -> variable_assign_left^
+	variable -> variable_assign_right^
+	variable_assign_left -> VARIABLE <<! exp
+	variable_assign_left -> variable <<! exp
+	variable_assign_right -> exp >>! VARIABLE
+	variable_assign_right -> exp >>! variable
+	variable_init -> variable_type __V56 <<! exp
+	variable_type -> TINY^
+	variable_type -> SMALL^
+	variable_type -> NORMAL^
+	variable_type -> BIG^
+	variable_type -> FIELD^

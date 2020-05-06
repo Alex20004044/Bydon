@@ -19,6 +19,9 @@ big main() << 0
 	print func(func(svar1 + 1)),
 	print func(func(svar1 + 1) svar2),
 	print func(func(func((-1)))),
+	
+	normal nvar << func(1 1 2 3 4 5),
+	print nvar,
 	return 0.
 big func(big svar1 << 1) << -1
 	return -svar1.

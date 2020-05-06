@@ -1,0 +1,1415 @@
+
+State 0:
+	Contexts:
+	Transitions:
+		On program shift to 1
+		On __V61 shift to 2
+		On function_define shift to 3
+		On variable_type shift to 4
+		On TINY shift to 5
+		On SMALL shift to 6
+		On NORMAL shift to 7
+		On BIG shift to 8
+		On FIELD shift to 9
+	Items:
+		[__VAxiom -> * program $ ][ ε]
+		[program -> * __V61 ][ $]
+		[__V61 -> * function_define ][ $ TINY SMALL NORMAL BIG FIELD]
+		[__V61 -> * __V61 function_define ][ $ TINY SMALL NORMAL BIG FIELD]
+		[function_define -> * variable_type VARIABLE function_parametres << exp_resatom statement_list ][ $]
+		[variable_type -> * TINY ][ VARIABLE]
+		[variable_type -> * SMALL ][ VARIABLE]
+		[variable_type -> * NORMAL ][ VARIABLE]
+		[variable_type -> * BIG ][ VARIABLE]
+		[variable_type -> * FIELD ][ VARIABLE]
+	Conflicts:
+
+State 1:
+	Contexts:
+	Transitions:
+		On $ shift to 10
+	Items:
+		[__VAxiom -> program * $ ][ ε]
+	Conflicts:
+
+State 2:
+	Contexts:
+	Transitions:
+		On function_define shift to 11
+		On variable_type shift to 4
+		On TINY shift to 5
+		On SMALL shift to 6
+		On NORMAL shift to 7
+		On BIG shift to 8
+		On FIELD shift to 9
+	Items:
+		[program -> __V61 * ][ $]
+		[__V61 -> __V61 * function_define ][ $ TINY SMALL NORMAL BIG FIELD]
+		[function_define -> * variable_type VARIABLE function_parametres << exp_resatom statement_list ][ $ TINY SMALL NORMAL BIG FIELD]
+		[variable_type -> * TINY ][ VARIABLE]
+		[variable_type -> * SMALL ][ VARIABLE]
+		[variable_type -> * NORMAL ][ VARIABLE]
+		[variable_type -> * BIG ][ VARIABLE]
+		[variable_type -> * FIELD ][ VARIABLE]
+	Conflicts:
+
+State 3:
+	Contexts:
+	Transitions:
+	Items:
+		[__V61 -> function_define * ][ $ TINY SMALL NORMAL BIG FIELD]
+	Conflicts:
+
+State 4:
+	Contexts:
+	Transitions:
+		On VARIABLE shift to 12
+	Items:
+		[function_define -> variable_type * VARIABLE function_parametres << exp_resatom statement_list ][ $ TINY SMALL NORMAL BIG FIELD]
+	Conflicts:
+
+State 5:
+	Contexts:
+	Transitions:
+	Items:
+		[variable_type -> TINY * ][ VARIABLE]
+	Conflicts:
+
+State 6:
+	Contexts:
+	Transitions:
+	Items:
+		[variable_type -> SMALL * ][ VARIABLE]
+	Conflicts:
+
+State 7:
+	Contexts:
+	Transitions:
+	Items:
+		[variable_type -> NORMAL * ][ VARIABLE]
+	Conflicts:
+
+State 8:
+	Contexts:
+	Transitions:
+	Items:
+		[variable_type -> BIG * ][ VARIABLE]
+	Conflicts:
+
+State 9:
+	Contexts:
+	Transitions:
+	Items:
+		[variable_type -> FIELD * ][ VARIABLE]
+	Conflicts:
+
+State 10:
+	Contexts:
+	Transitions:
+	Items:
+		[__VAxiom -> program $ * ][ ε]
+	Conflicts:
+
+State 11:
+	Contexts:
+	Transitions:
+	Items:
+		[__V61 -> __V61 function_define * ][ $ TINY SMALL NORMAL BIG FIELD]
+	Conflicts:
+
+State 12:
+	Contexts:
+	Transitions:
+		On function_parametres shift to 13
+		On ( shift to 14
+	Items:
+		[function_define -> variable_type VARIABLE * function_parametres << exp_resatom statement_list ][ $ TINY SMALL NORMAL BIG FIELD]
+		[function_parametres -> * ( ) ][ <<]
+		[function_parametres -> * ( __V60 ) ][ <<]
+	Conflicts:
+
+State 13:
+	Contexts:
+	Transitions:
+		On << shift to 15
+	Items:
+		[function_define -> variable_type VARIABLE function_parametres * << exp_resatom statement_list ][ $ TINY SMALL NORMAL BIG FIELD]
+	Conflicts:
+
+State 14:
+	Contexts:
+	Transitions:
+		On ) shift to 16
+		On __V60 shift to 17
+		On parametre shift to 18
+		On variable_init shift to 19
+		On variable_type shift to 20
+		On TINY shift to 5
+		On SMALL shift to 6
+		On NORMAL shift to 7
+		On BIG shift to 8
+		On FIELD shift to 9
+	Items:
+		[function_parametres -> ( * ) ][ <<]
+		[function_parametres -> ( * __V60 ) ][ <<]
+		[__V60 -> * parametre ][ TINY SMALL NORMAL BIG FIELD )]
+		[__V60 -> * __V60 parametre ][ TINY SMALL NORMAL BIG FIELD )]
+		[parametre -> * variable_init ][ )]
+		[variable_init -> * variable_type __V56 << exp ][ )]
+		[variable_type -> * TINY ][ VARIABLE]
+		[variable_type -> * SMALL ][ VARIABLE]
+		[variable_type -> * NORMAL ][ VARIABLE]
+		[variable_type -> * BIG ][ VARIABLE]
+		[variable_type -> * FIELD ][ VARIABLE]
+	Conflicts:
+
+State 15:
+	Contexts:
+	Transitions:
+		On exp_resatom shift to 21
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[function_define -> variable_type VARIABLE function_parametres << * exp_resatom statement_list ][ $ TINY SMALL NORMAL BIG FIELD]
+		[exp_resatom -> * - exp_atom ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+		[exp_resatom -> * + exp_atom ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+		[exp_resatom -> * exp_atom ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+		[exp_atom -> * NUMBER ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+		[exp_atom -> * VARIABLE ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+		[exp_atom -> * exp_bracket ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+		[exp_atom -> * function_call ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+		[exp_bracket -> * ( exp ) ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+		[function_call -> * VARIABLE function_call_args ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+	Conflicts:
+
+State 16:
+	Contexts:
+	Transitions:
+	Items:
+		[function_parametres -> ( ) * ][ <<]
+	Conflicts:
+
+State 17:
+	Contexts:
+	Transitions:
+		On ) shift to 30
+		On parametre shift to 31
+		On variable_init shift to 19
+		On variable_type shift to 20
+		On TINY shift to 5
+		On SMALL shift to 6
+		On NORMAL shift to 7
+		On BIG shift to 8
+		On FIELD shift to 9
+	Items:
+		[function_parametres -> ( __V60 * ) ][ <<]
+		[__V60 -> __V60 * parametre ][ TINY SMALL NORMAL BIG FIELD )]
+		[parametre -> * variable_init ][ TINY SMALL NORMAL BIG FIELD )]
+		[variable_init -> * variable_type __V56 << exp ][ TINY SMALL NORMAL BIG FIELD )]
+		[variable_type -> * TINY ][ VARIABLE]
+		[variable_type -> * SMALL ][ VARIABLE]
+		[variable_type -> * NORMAL ][ VARIABLE]
+		[variable_type -> * BIG ][ VARIABLE]
+		[variable_type -> * FIELD ][ VARIABLE]
+	Conflicts:
+
+State 18:
+	Contexts:
+	Transitions:
+	Items:
+		[__V60 -> parametre * ][ TINY SMALL NORMAL BIG FIELD )]
+	Conflicts:
+
+State 19:
+	Contexts:
+	Transitions:
+	Items:
+		[parametre -> variable_init * ][ TINY SMALL NORMAL BIG FIELD )]
+	Conflicts:
+
+State 20:
+	Contexts:
+	Transitions:
+		On __V56 shift to 32
+		On VARIABLE shift to 33
+	Items:
+		[variable_init -> variable_type * __V56 << exp ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[__V56 -> * VARIABLE ][ VARIABLE <<]
+		[__V56 -> * __V56 VARIABLE ][ VARIABLE <<]
+	Conflicts:
+
+State 21:
+	Contexts:
+	Transitions:
+		On statement_list shift to 34
+		On statement shift to 35
+		On __V58 shift to 36
+		On RETURN shift to 37
+		On exp shift to 38
+		On variable_init shift to 39
+		On PRINT shift to 40
+		On exp_compare shift to 41
+		On SONAR shift to 42
+		On GO shift to 43
+		On variable_type shift to 20
+		On exp_term shift to 44
+		On TINY shift to 5
+		On SMALL shift to 6
+		On NORMAL shift to 7
+		On BIG shift to 8
+		On FIELD shift to 9
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[function_define -> variable_type VARIABLE function_parametres << exp_resatom * statement_list ][ $ TINY SMALL NORMAL BIG FIELD]
+		[statement_list -> * statement . ][ $ TINY SMALL NORMAL BIG FIELD]
+		[statement_list -> * __V58 statement . ][ $ TINY SMALL NORMAL BIG FIELD]
+		[statement -> * RETURN exp ][ , .]
+		[statement -> * exp ][ , .]
+		[statement -> * variable_init ][ , .]
+		[statement -> * PRINT exp ][ , .]
+		[__V58 -> * statement , ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+		[__V58 -> * __V58 statement , ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+		[exp -> * exp_compare ][ .]
+		[exp -> * SONAR ][ .]
+		[exp -> * GO ][ .]
+		[variable_init -> * variable_type __V56 << exp ][ .]
+		[exp_compare -> * exp_term ][ < > <= >= = <> .]
+		[exp_compare -> * exp_compare < exp_term ][ < > <= >= = <> .]
+		[exp_compare -> * exp_compare > exp_term ][ < > <= >= = <> .]
+		[exp_compare -> * exp_compare <= exp_term ][ < > <= >= = <> .]
+		[exp_compare -> * exp_compare >= exp_term ][ < > <= >= = <> .]
+		[exp_compare -> * exp_compare = exp_term ][ < > <= >= = <> .]
+		[exp_compare -> * exp_compare <> exp_term ][ < > <= >= = <> .]
+		[variable_type -> * TINY ][ VARIABLE]
+		[variable_type -> * SMALL ][ VARIABLE]
+		[variable_type -> * NORMAL ][ VARIABLE]
+		[variable_type -> * BIG ][ VARIABLE]
+		[variable_type -> * FIELD ][ VARIABLE]
+		[exp_term -> * exp_factor ][ - + .]
+		[exp_term -> * exp_term + exp_factor ][ - + .]
+		[exp_term -> * exp_term - exp_factor ][ - + .]
+		[exp_factor -> * exp_resatom ][ * / .]
+		[exp_factor -> * exp_factor * exp_resatom ][ * / .]
+		[exp_factor -> * exp_factor / exp_resatom ][ * / .]
+		[exp_resatom -> * - exp_atom ][ .]
+		[exp_resatom -> * + exp_atom ][ .]
+		[exp_resatom -> * exp_atom ][ .]
+		[exp_atom -> * NUMBER ][ .]
+		[exp_atom -> * VARIABLE ][ .]
+		[exp_atom -> * exp_bracket ][ .]
+		[exp_atom -> * function_call ][ .]
+		[exp_bracket -> * ( exp ) ][ .]
+		[function_call -> * VARIABLE function_call_args ][ .]
+	Conflicts:
+
+State 22:
+	Contexts:
+	Transitions:
+		On exp_atom shift to 47
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_resatom -> - * exp_atom ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp_atom -> * NUMBER ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp_atom -> * VARIABLE ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp_atom -> * exp_bracket ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp_atom -> * function_call ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp_bracket -> * ( exp ) ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[function_call -> * VARIABLE function_call_args ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 23:
+	Contexts:
+	Transitions:
+		On exp_atom shift to 48
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_resatom -> + * exp_atom ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp_atom -> * NUMBER ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp_atom -> * VARIABLE ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp_atom -> * exp_bracket ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp_atom -> * function_call ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp_bracket -> * ( exp ) ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[function_call -> * VARIABLE function_call_args ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 24:
+	Contexts:
+	Transitions:
+	Items:
+		[exp_resatom -> exp_atom * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 25:
+	Contexts:
+	Transitions:
+	Items:
+		[exp_atom -> NUMBER * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 26:
+	Contexts:
+	Transitions:
+		On function_call_args shift to 49
+		On ( shift to 50
+		On exp_bracket shift to 51
+	Items:
+		[exp_atom -> VARIABLE * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[function_call -> VARIABLE * function_call_args ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[function_call_args -> * ( ) ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[function_call_args -> * ( __V55 ) ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[function_call_args -> * exp_bracket ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp_bracket -> * ( exp ) ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+		Conflict ConflictShiftReduce on (:
+			Items:
+				[function_call_args -> * ( )]
+				[function_call_args -> * ( __V55 )]
+				[exp_bracket -> * ( exp )]
+				[exp_atom -> VARIABLE *]
+			Examples:
+				〖TINY VARIABLE ( ) << VARIABLE (〗
+				〖TINY VARIABLE ( ) << - NUMBER RETURN . TINY VARIABLE ( ) << VARIABLE (〗
+
+State 27:
+	Contexts:
+	Transitions:
+	Items:
+		[exp_atom -> exp_bracket * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 28:
+	Contexts:
+	Transitions:
+	Items:
+		[exp_atom -> function_call * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 29:
+	Contexts:
+	Transitions:
+		On exp shift to 52
+		On exp_compare shift to 41
+		On SONAR shift to 42
+		On GO shift to 43
+		On exp_term shift to 44
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_bracket -> ( * exp ) ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp -> * exp_compare ][ )]
+		[exp -> * SONAR ][ )]
+		[exp -> * GO ][ )]
+		[exp_compare -> * exp_term ][ < > <= >= = <> )]
+		[exp_compare -> * exp_compare < exp_term ][ < > <= >= = <> )]
+		[exp_compare -> * exp_compare > exp_term ][ < > <= >= = <> )]
+		[exp_compare -> * exp_compare <= exp_term ][ < > <= >= = <> )]
+		[exp_compare -> * exp_compare >= exp_term ][ < > <= >= = <> )]
+		[exp_compare -> * exp_compare = exp_term ][ < > <= >= = <> )]
+		[exp_compare -> * exp_compare <> exp_term ][ < > <= >= = <> )]
+		[exp_term -> * exp_factor ][ - + )]
+		[exp_term -> * exp_term + exp_factor ][ - + )]
+		[exp_term -> * exp_term - exp_factor ][ - + )]
+		[exp_factor -> * exp_resatom ][ * / )]
+		[exp_factor -> * exp_factor * exp_resatom ][ * / )]
+		[exp_factor -> * exp_factor / exp_resatom ][ * / )]
+		[exp_resatom -> * - exp_atom ][ )]
+		[exp_resatom -> * + exp_atom ][ )]
+		[exp_resatom -> * exp_atom ][ )]
+		[exp_atom -> * NUMBER ][ )]
+		[exp_atom -> * VARIABLE ][ )]
+		[exp_atom -> * exp_bracket ][ )]
+		[exp_atom -> * function_call ][ )]
+		[exp_bracket -> * ( exp ) ][ )]
+		[function_call -> * VARIABLE function_call_args ][ )]
+	Conflicts:
+
+State 30:
+	Contexts:
+	Transitions:
+	Items:
+		[function_parametres -> ( __V60 ) * ][ <<]
+	Conflicts:
+
+State 31:
+	Contexts:
+	Transitions:
+	Items:
+		[__V60 -> __V60 parametre * ][ TINY SMALL NORMAL BIG FIELD )]
+	Conflicts:
+
+State 32:
+	Contexts:
+	Transitions:
+		On << shift to 53
+		On VARIABLE shift to 54
+	Items:
+		[variable_init -> variable_type __V56 * << exp ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[__V56 -> __V56 * VARIABLE ][ VARIABLE <<]
+	Conflicts:
+
+State 33:
+	Contexts:
+	Transitions:
+	Items:
+		[__V56 -> VARIABLE * ][ VARIABLE <<]
+	Conflicts:
+
+State 34:
+	Contexts:
+	Transitions:
+	Items:
+		[function_define -> variable_type VARIABLE function_parametres << exp_resatom statement_list * ][ $ TINY SMALL NORMAL BIG FIELD]
+	Conflicts:
+
+State 35:
+	Contexts:
+	Transitions:
+		On . shift to 55
+		On , shift to 56
+	Items:
+		[statement_list -> statement * . ][ $ TINY SMALL NORMAL BIG FIELD]
+		[__V58 -> statement * , ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+	Conflicts:
+
+State 36:
+	Contexts:
+	Transitions:
+		On statement shift to 57
+		On RETURN shift to 37
+		On exp shift to 38
+		On variable_init shift to 39
+		On PRINT shift to 40
+		On exp_compare shift to 41
+		On SONAR shift to 42
+		On GO shift to 43
+		On variable_type shift to 20
+		On exp_term shift to 44
+		On TINY shift to 5
+		On SMALL shift to 6
+		On NORMAL shift to 7
+		On BIG shift to 8
+		On FIELD shift to 9
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[statement_list -> __V58 * statement . ][ $ TINY SMALL NORMAL BIG FIELD]
+		[__V58 -> __V58 * statement , ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+		[statement -> * RETURN exp ][ , .]
+		[statement -> * exp ][ , .]
+		[statement -> * variable_init ][ , .]
+		[statement -> * PRINT exp ][ , .]
+		[exp -> * exp_compare ][ , .]
+		[exp -> * SONAR ][ , .]
+		[exp -> * GO ][ , .]
+		[variable_init -> * variable_type __V56 << exp ][ , .]
+		[exp_compare -> * exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare < exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare > exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare <= exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare >= exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare = exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare <> exp_term ][ < > <= >= = <> , .]
+		[variable_type -> * TINY ][ VARIABLE]
+		[variable_type -> * SMALL ][ VARIABLE]
+		[variable_type -> * NORMAL ][ VARIABLE]
+		[variable_type -> * BIG ][ VARIABLE]
+		[variable_type -> * FIELD ][ VARIABLE]
+		[exp_term -> * exp_factor ][ - + , .]
+		[exp_term -> * exp_term + exp_factor ][ - + , .]
+		[exp_term -> * exp_term - exp_factor ][ - + , .]
+		[exp_factor -> * exp_resatom ][ * / , .]
+		[exp_factor -> * exp_factor * exp_resatom ][ * / , .]
+		[exp_factor -> * exp_factor / exp_resatom ][ * / , .]
+		[exp_resatom -> * - exp_atom ][ , .]
+		[exp_resatom -> * + exp_atom ][ , .]
+		[exp_resatom -> * exp_atom ][ , .]
+		[exp_atom -> * NUMBER ][ , .]
+		[exp_atom -> * VARIABLE ][ , .]
+		[exp_atom -> * exp_bracket ][ , .]
+		[exp_atom -> * function_call ][ , .]
+		[exp_bracket -> * ( exp ) ][ , .]
+		[function_call -> * VARIABLE function_call_args ][ , .]
+	Conflicts:
+
+State 37:
+	Contexts:
+	Transitions:
+		On exp shift to 58
+		On exp_compare shift to 41
+		On SONAR shift to 42
+		On GO shift to 43
+		On exp_term shift to 44
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[statement -> RETURN * exp ][ , .]
+		[exp -> * exp_compare ][ , .]
+		[exp -> * SONAR ][ , .]
+		[exp -> * GO ][ , .]
+		[exp_compare -> * exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare < exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare > exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare <= exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare >= exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare = exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare <> exp_term ][ < > <= >= = <> , .]
+		[exp_term -> * exp_factor ][ - + , .]
+		[exp_term -> * exp_term + exp_factor ][ - + , .]
+		[exp_term -> * exp_term - exp_factor ][ - + , .]
+		[exp_factor -> * exp_resatom ][ * / , .]
+		[exp_factor -> * exp_factor * exp_resatom ][ * / , .]
+		[exp_factor -> * exp_factor / exp_resatom ][ * / , .]
+		[exp_resatom -> * - exp_atom ][ , .]
+		[exp_resatom -> * + exp_atom ][ , .]
+		[exp_resatom -> * exp_atom ][ , .]
+		[exp_atom -> * NUMBER ][ , .]
+		[exp_atom -> * VARIABLE ][ , .]
+		[exp_atom -> * exp_bracket ][ , .]
+		[exp_atom -> * function_call ][ , .]
+		[exp_bracket -> * ( exp ) ][ , .]
+		[function_call -> * VARIABLE function_call_args ][ , .]
+	Conflicts:
+
+State 38:
+	Contexts:
+	Transitions:
+	Items:
+		[statement -> exp * ][ , .]
+	Conflicts:
+
+State 39:
+	Contexts:
+	Transitions:
+	Items:
+		[statement -> variable_init * ][ , .]
+	Conflicts:
+
+State 40:
+	Contexts:
+	Transitions:
+		On exp shift to 59
+		On exp_compare shift to 41
+		On SONAR shift to 42
+		On GO shift to 43
+		On exp_term shift to 44
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[statement -> PRINT * exp ][ , .]
+		[exp -> * exp_compare ][ , .]
+		[exp -> * SONAR ][ , .]
+		[exp -> * GO ][ , .]
+		[exp_compare -> * exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare < exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare > exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare <= exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare >= exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare = exp_term ][ < > <= >= = <> , .]
+		[exp_compare -> * exp_compare <> exp_term ][ < > <= >= = <> , .]
+		[exp_term -> * exp_factor ][ - + , .]
+		[exp_term -> * exp_term + exp_factor ][ - + , .]
+		[exp_term -> * exp_term - exp_factor ][ - + , .]
+		[exp_factor -> * exp_resatom ][ * / , .]
+		[exp_factor -> * exp_factor * exp_resatom ][ * / , .]
+		[exp_factor -> * exp_factor / exp_resatom ][ * / , .]
+		[exp_resatom -> * - exp_atom ][ , .]
+		[exp_resatom -> * + exp_atom ][ , .]
+		[exp_resatom -> * exp_atom ][ , .]
+		[exp_atom -> * NUMBER ][ , .]
+		[exp_atom -> * VARIABLE ][ , .]
+		[exp_atom -> * exp_bracket ][ , .]
+		[exp_atom -> * function_call ][ , .]
+		[exp_bracket -> * ( exp ) ][ , .]
+		[function_call -> * VARIABLE function_call_args ][ , .]
+	Conflicts:
+
+State 41:
+	Contexts:
+	Transitions:
+		On < shift to 60
+		On > shift to 61
+		On <= shift to 62
+		On >= shift to 63
+		On = shift to 64
+		On <> shift to 65
+	Items:
+		[exp -> exp_compare * ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[exp_compare -> exp_compare * < exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_compare -> exp_compare * > exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_compare -> exp_compare * <= exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_compare -> exp_compare * >= exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_compare -> exp_compare * = exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_compare -> exp_compare * <> exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+	Conflicts:
+
+State 42:
+	Contexts:
+	Transitions:
+	Items:
+		[exp -> SONAR * ][ TINY SMALL NORMAL BIG FIELD ) , .]
+	Conflicts:
+
+State 43:
+	Contexts:
+	Transitions:
+	Items:
+		[exp -> GO * ][ TINY SMALL NORMAL BIG FIELD ) , .]
+	Conflicts:
+
+State 44:
+	Contexts:
+	Transitions:
+		On + shift to 66
+		On - shift to 67
+	Items:
+		[exp_compare -> exp_term * ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> exp_term * + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> exp_term * - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+	Conflicts:
+
+State 45:
+	Contexts:
+	Transitions:
+		On * shift to 68
+		On / shift to 69
+	Items:
+		[exp_term -> exp_factor * ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_factor -> exp_factor * * exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_factor -> exp_factor * / exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+	Conflicts:
+
+State 46:
+	Contexts:
+	Transitions:
+	Items:
+		[exp_factor -> exp_resatom * ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+	Conflicts:
+
+State 47:
+	Contexts:
+	Transitions:
+	Items:
+		[exp_resatom -> - exp_atom * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 48:
+	Contexts:
+	Transitions:
+	Items:
+		[exp_resatom -> + exp_atom * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 49:
+	Contexts:
+	Transitions:
+	Items:
+		[function_call -> VARIABLE function_call_args * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 50:
+	Contexts:
+	Transitions:
+		On ) shift to 70
+		On __V55 shift to 71
+		On exp shift to 52
+		On exp_atom shift to 72
+		On exp_compare shift to 41
+		On SONAR shift to 42
+		On GO shift to 43
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On exp_term shift to 44
+		On ( shift to 29
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+	Items:
+		[function_call_args -> ( * ) ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[function_call_args -> ( * __V55 ) ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[exp_bracket -> ( * exp ) ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[__V55 -> * exp_atom ][ NUMBER VARIABLE ( )]
+		[__V55 -> * __V55 exp_atom ][ NUMBER VARIABLE ( )]
+		[exp -> * exp_compare ][ )]
+		[exp -> * SONAR ][ )]
+		[exp -> * GO ][ )]
+		[exp_atom -> * NUMBER ][ )]
+		[exp_atom -> * VARIABLE ][ )]
+		[exp_atom -> * exp_bracket ][ )]
+		[exp_atom -> * function_call ][ )]
+		[exp_compare -> * exp_term ][ < > <= >= = <> )]
+		[exp_compare -> * exp_compare < exp_term ][ < > <= >= = <> )]
+		[exp_compare -> * exp_compare > exp_term ][ < > <= >= = <> )]
+		[exp_compare -> * exp_compare <= exp_term ][ < > <= >= = <> )]
+		[exp_compare -> * exp_compare >= exp_term ][ < > <= >= = <> )]
+		[exp_compare -> * exp_compare = exp_term ][ < > <= >= = <> )]
+		[exp_compare -> * exp_compare <> exp_term ][ < > <= >= = <> )]
+		[exp_bracket -> * ( exp ) ][ )]
+		[function_call -> * VARIABLE function_call_args ][ )]
+		[exp_term -> * exp_factor ][ - + )]
+		[exp_term -> * exp_term + exp_factor ][ - + )]
+		[exp_term -> * exp_term - exp_factor ][ - + )]
+		[exp_factor -> * exp_resatom ][ * / )]
+		[exp_factor -> * exp_factor * exp_resatom ][ * / )]
+		[exp_factor -> * exp_factor / exp_resatom ][ * / )]
+		[exp_resatom -> * - exp_atom ][ )]
+		[exp_resatom -> * + exp_atom ][ )]
+		[exp_resatom -> * exp_atom ][ )]
+	Conflicts:
+
+State 51:
+	Contexts:
+	Transitions:
+	Items:
+		[function_call_args -> exp_bracket * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 52:
+	Contexts:
+	Transitions:
+		On ) shift to 73
+	Items:
+		[exp_bracket -> ( exp * ) ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 53:
+	Contexts:
+	Transitions:
+		On exp shift to 74
+		On exp_compare shift to 41
+		On SONAR shift to 42
+		On GO shift to 43
+		On exp_term shift to 44
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[variable_init -> variable_type __V56 << * exp ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[exp -> * exp_compare ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[exp -> * SONAR ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[exp -> * GO ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[exp_compare -> * exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_compare -> * exp_compare < exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_compare -> * exp_compare > exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_compare -> * exp_compare <= exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_compare -> * exp_compare >= exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_compare -> * exp_compare = exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_compare -> * exp_compare <> exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> * exp_factor ][ TINY SMALL NORMAL BIG FIELD - + ) , .]
+		[exp_term -> * exp_term + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + ) , .]
+		[exp_term -> * exp_term - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + ) , .]
+		[exp_factor -> * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / ) , .]
+		[exp_factor -> * exp_factor * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / ) , .]
+		[exp_factor -> * exp_factor / exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / ) , .]
+		[exp_resatom -> * - exp_atom ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[exp_resatom -> * + exp_atom ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[exp_resatom -> * exp_atom ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[exp_atom -> * NUMBER ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[exp_atom -> * VARIABLE ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[exp_atom -> * exp_bracket ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[exp_atom -> * function_call ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[exp_bracket -> * ( exp ) ][ TINY SMALL NORMAL BIG FIELD ) , .]
+		[function_call -> * VARIABLE function_call_args ][ TINY SMALL NORMAL BIG FIELD ) , .]
+	Conflicts:
+
+State 54:
+	Contexts:
+	Transitions:
+	Items:
+		[__V56 -> __V56 VARIABLE * ][ VARIABLE <<]
+	Conflicts:
+
+State 55:
+	Contexts:
+	Transitions:
+	Items:
+		[statement_list -> statement . * ][ $ TINY SMALL NORMAL BIG FIELD]
+	Conflicts:
+
+State 56:
+	Contexts:
+	Transitions:
+	Items:
+		[__V58 -> statement , * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+	Conflicts:
+
+State 57:
+	Contexts:
+	Transitions:
+		On . shift to 75
+		On , shift to 76
+	Items:
+		[statement_list -> __V58 statement * . ][ $ TINY SMALL NORMAL BIG FIELD]
+		[__V58 -> __V58 statement * , ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+	Conflicts:
+
+State 58:
+	Contexts:
+	Transitions:
+	Items:
+		[statement -> RETURN exp * ][ , .]
+	Conflicts:
+
+State 59:
+	Contexts:
+	Transitions:
+	Items:
+		[statement -> PRINT exp * ][ , .]
+	Conflicts:
+
+State 60:
+	Contexts:
+	Transitions:
+		On exp_term shift to 77
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_compare -> exp_compare < * exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> * exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> * exp_term + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> * exp_term - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_factor -> * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor / exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_resatom -> * - exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_resatom -> * + exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_resatom -> * exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * NUMBER ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * VARIABLE ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * exp_bracket ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * function_call ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_bracket -> * ( exp ) ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[function_call -> * VARIABLE function_call_args ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+	Conflicts:
+
+State 61:
+	Contexts:
+	Transitions:
+		On exp_term shift to 78
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_compare -> exp_compare > * exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> * exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> * exp_term + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> * exp_term - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_factor -> * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor / exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_resatom -> * - exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_resatom -> * + exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_resatom -> * exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * NUMBER ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * VARIABLE ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * exp_bracket ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * function_call ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_bracket -> * ( exp ) ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[function_call -> * VARIABLE function_call_args ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+	Conflicts:
+
+State 62:
+	Contexts:
+	Transitions:
+		On exp_term shift to 79
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_compare -> exp_compare <= * exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> * exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> * exp_term + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> * exp_term - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_factor -> * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor / exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_resatom -> * - exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_resatom -> * + exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_resatom -> * exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * NUMBER ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * VARIABLE ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * exp_bracket ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * function_call ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_bracket -> * ( exp ) ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[function_call -> * VARIABLE function_call_args ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+	Conflicts:
+
+State 63:
+	Contexts:
+	Transitions:
+		On exp_term shift to 80
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_compare -> exp_compare >= * exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> * exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> * exp_term + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> * exp_term - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_factor -> * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor / exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_resatom -> * - exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_resatom -> * + exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_resatom -> * exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * NUMBER ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * VARIABLE ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * exp_bracket ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * function_call ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_bracket -> * ( exp ) ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[function_call -> * VARIABLE function_call_args ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+	Conflicts:
+
+State 64:
+	Contexts:
+	Transitions:
+		On exp_term shift to 81
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_compare -> exp_compare = * exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> * exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> * exp_term + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> * exp_term - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_factor -> * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor / exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_resatom -> * - exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_resatom -> * + exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_resatom -> * exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * NUMBER ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * VARIABLE ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * exp_bracket ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * function_call ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_bracket -> * ( exp ) ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[function_call -> * VARIABLE function_call_args ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+	Conflicts:
+
+State 65:
+	Contexts:
+	Transitions:
+		On exp_term shift to 82
+		On exp_factor shift to 45
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_compare -> exp_compare <> * exp_term ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> * exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> * exp_term + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> * exp_term - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_factor -> * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor * exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor / exp_resatom ][ TINY SMALL NORMAL BIG FIELD * / < > <= >= = <> ) , .]
+		[exp_resatom -> * - exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_resatom -> * + exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_resatom -> * exp_atom ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * NUMBER ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * VARIABLE ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * exp_bracket ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_atom -> * function_call ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_bracket -> * ( exp ) ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[function_call -> * VARIABLE function_call_args ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+	Conflicts:
+
+State 66:
+	Contexts:
+	Transitions:
+		On exp_factor shift to 83
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_term -> exp_term + * exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_factor -> * exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor * exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor / exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_resatom -> * - exp_atom ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_resatom -> * + exp_atom ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_resatom -> * exp_atom ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_atom -> * NUMBER ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_atom -> * VARIABLE ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_atom -> * exp_bracket ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_atom -> * function_call ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_bracket -> * ( exp ) ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[function_call -> * VARIABLE function_call_args ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+	Conflicts:
+
+State 67:
+	Contexts:
+	Transitions:
+		On exp_factor shift to 84
+		On exp_resatom shift to 46
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_term -> exp_term - * exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_factor -> * exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor * exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_factor -> * exp_factor / exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_resatom -> * - exp_atom ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_resatom -> * + exp_atom ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_resatom -> * exp_atom ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_atom -> * NUMBER ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_atom -> * VARIABLE ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_atom -> * exp_bracket ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_atom -> * function_call ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_bracket -> * ( exp ) ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[function_call -> * VARIABLE function_call_args ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+	Conflicts:
+
+State 68:
+	Contexts:
+	Transitions:
+		On exp_resatom shift to 85
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_factor -> exp_factor * * exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_resatom -> * - exp_atom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_resatom -> * + exp_atom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_resatom -> * exp_atom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_atom -> * NUMBER ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_atom -> * VARIABLE ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_atom -> * exp_bracket ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_atom -> * function_call ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_bracket -> * ( exp ) ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[function_call -> * VARIABLE function_call_args ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+	Conflicts:
+
+State 69:
+	Contexts:
+	Transitions:
+		On exp_resatom shift to 86
+		On - shift to 22
+		On + shift to 23
+		On exp_atom shift to 24
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[exp_factor -> exp_factor / * exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_resatom -> * - exp_atom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_resatom -> * + exp_atom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_resatom -> * exp_atom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_atom -> * NUMBER ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_atom -> * VARIABLE ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_atom -> * exp_bracket ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_atom -> * function_call ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_bracket -> * ( exp ) ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[function_call -> * VARIABLE function_call_args ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+	Conflicts:
+
+State 70:
+	Contexts:
+	Transitions:
+	Items:
+		[function_call_args -> ( ) * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 71:
+	Contexts:
+	Transitions:
+		On ) shift to 87
+		On exp_atom shift to 88
+		On NUMBER shift to 25
+		On VARIABLE shift to 26
+		On exp_bracket shift to 27
+		On function_call shift to 28
+		On ( shift to 29
+	Items:
+		[function_call_args -> ( __V55 * ) ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+		[__V55 -> __V55 * exp_atom ][ NUMBER VARIABLE ( )]
+		[exp_atom -> * NUMBER ][ NUMBER VARIABLE ( )]
+		[exp_atom -> * VARIABLE ][ NUMBER VARIABLE ( )]
+		[exp_atom -> * exp_bracket ][ NUMBER VARIABLE ( )]
+		[exp_atom -> * function_call ][ NUMBER VARIABLE ( )]
+		[exp_bracket -> * ( exp ) ][ NUMBER VARIABLE ( )]
+		[function_call -> * VARIABLE function_call_args ][ NUMBER VARIABLE ( )]
+	Conflicts:
+
+State 72:
+	Contexts:
+	Transitions:
+	Items:
+		[__V55 -> exp_atom * ][ NUMBER VARIABLE ( )]
+		[exp_resatom -> exp_atom * ][ - + * / < > <= >= = <> )]
+	Conflicts:
+		Conflict ConflictReduceReduce on ):
+			Items:
+				[__V55 -> exp_atom *]
+				[exp_resatom -> exp_atom *]
+			Examples:
+				〖TINY VARIABLE ( ) << VARIABLE ( NUMBER )〗
+				〖TINY VARIABLE ( ) << - NUMBER RETURN . TINY VARIABLE ( ) << VARIABLE ( NUMBER )〗
+
+State 73:
+	Contexts:
+	Transitions:
+	Items:
+		[exp_bracket -> ( exp ) * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 74:
+	Contexts:
+	Transitions:
+	Items:
+		[variable_init -> variable_type __V56 << exp * ][ TINY SMALL NORMAL BIG FIELD ) , .]
+	Conflicts:
+
+State 75:
+	Contexts:
+	Transitions:
+	Items:
+		[statement_list -> __V58 statement . * ][ $ TINY SMALL NORMAL BIG FIELD]
+	Conflicts:
+
+State 76:
+	Contexts:
+	Transitions:
+	Items:
+		[__V58 -> __V58 statement , * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + (]
+	Conflicts:
+
+State 77:
+	Contexts:
+	Transitions:
+		On + shift to 66
+		On - shift to 67
+	Items:
+		[exp_compare -> exp_compare < exp_term * ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> exp_term * + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> exp_term * - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+	Conflicts:
+
+State 78:
+	Contexts:
+	Transitions:
+		On + shift to 66
+		On - shift to 67
+	Items:
+		[exp_compare -> exp_compare > exp_term * ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> exp_term * + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> exp_term * - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+	Conflicts:
+
+State 79:
+	Contexts:
+	Transitions:
+		On + shift to 66
+		On - shift to 67
+	Items:
+		[exp_compare -> exp_compare <= exp_term * ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> exp_term * + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> exp_term * - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+	Conflicts:
+
+State 80:
+	Contexts:
+	Transitions:
+		On + shift to 66
+		On - shift to 67
+	Items:
+		[exp_compare -> exp_compare >= exp_term * ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> exp_term * + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> exp_term * - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+	Conflicts:
+
+State 81:
+	Contexts:
+	Transitions:
+		On + shift to 66
+		On - shift to 67
+	Items:
+		[exp_compare -> exp_compare = exp_term * ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> exp_term * + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> exp_term * - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+	Conflicts:
+
+State 82:
+	Contexts:
+	Transitions:
+		On + shift to 66
+		On - shift to 67
+	Items:
+		[exp_compare -> exp_compare <> exp_term * ][ TINY SMALL NORMAL BIG FIELD < > <= >= = <> ) , .]
+		[exp_term -> exp_term * + exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_term -> exp_term * - exp_factor ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+	Conflicts:
+
+State 83:
+	Contexts:
+	Transitions:
+		On * shift to 68
+		On / shift to 69
+	Items:
+		[exp_term -> exp_term + exp_factor * ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_factor -> exp_factor * * exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_factor -> exp_factor * / exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+	Conflicts:
+
+State 84:
+	Contexts:
+	Transitions:
+		On * shift to 68
+		On / shift to 69
+	Items:
+		[exp_term -> exp_term - exp_factor * ][ TINY SMALL NORMAL BIG FIELD - + < > <= >= = <> ) , .]
+		[exp_factor -> exp_factor * * exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+		[exp_factor -> exp_factor * / exp_resatom ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+	Conflicts:
+
+State 85:
+	Contexts:
+	Transitions:
+	Items:
+		[exp_factor -> exp_factor * exp_resatom * ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+	Conflicts:
+
+State 86:
+	Contexts:
+	Transitions:
+	Items:
+		[exp_factor -> exp_factor / exp_resatom * ][ TINY SMALL NORMAL BIG FIELD - + * / < > <= >= = <> ) , .]
+	Conflicts:
+
+State 87:
+	Contexts:
+	Transitions:
+	Items:
+		[function_call_args -> ( __V55 ) * ][ NUMBER VARIABLE TINY SMALL NORMAL BIG FIELD GO SONAR PRINT RETURN - + * / < > <= >= = <> ( ) , .]
+	Conflicts:
+
+State 88:
+	Contexts:
+	Transitions:
+	Items:
+		[__V55 -> __V55 exp_atom * ][ NUMBER VARIABLE ( )]
+	Conflicts:

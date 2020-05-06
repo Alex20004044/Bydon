@@ -37,13 +37,14 @@ grammar Bydon
     
     rules
     {
-
+		
 		function_call -> VARIABLE function_call_args;
 		
         exp_atom -> NUMBER^
 					| VARIABLE^
                     | exp_bracket^
-					| function_call^;
+					| function_call^
+					| variable^;
 
 		exp_resatom -> '-'^ exp_atom
 					| '+'^ exp_atom
@@ -64,19 +65,19 @@ grammar Bydon
 					| exp_compare '>='^ exp_term
 					| exp_compare '='^ exp_term
 					| exp_compare '<>'^ exp_term;		
-		
-		exp -> exp_compare^ | SONAR^ | GO^ ;	
+		exp -> exp_compare^ | SONAR^ | GO^;	
 		exp_bracket -> '('! exp^ ')'!;
 		
+		variable_assign_right -> exp '>>'! (VARIABLE | variable);
+		variable_assign_left -> (VARIABLE | variable)  '<<'! exp;
+		variable -> variable_assign_left^ | variable_assign_right^;
 		
 		function_call_args -> '('! (exp_atom*) ')'! | exp_bracket;
 		
 		variable_type -> TINY^ | SMALL^ | NORMAL^ | BIG^ | FIELD^;	
 		variable_init -> variable_type VARIABLE+ '<<'! exp;
-		
-		
-		
-		statement -> RETURN^ exp | exp ^ | variable_init^ | PRINT^ exp | function_call^ ;
+					
+		statement -> RETURN^ exp | exp ^ | variable_init^ | PRINT^ exp;
 		statement_list -> (statement ','!)* statement '.'!;
 		
 		parametre -> variable_init^;

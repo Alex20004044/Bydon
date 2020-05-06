@@ -1,0 +1,17 @@
+big main() << 0
+	tiny tvar1 tvar2 tvar3 << 0,
+	print tvar1,
+	print tvar2,
+	print tvar3,
+	
+	tvar1 << 1,
+	tvar2 << 1 + 1,
+	tvar3 << -1,
+	
+	print tvar1,
+	print tvar2,
+	print tvar3,
+	
+	print tvar1 * tvar2 + tvar3,
+	
+	return 0.
