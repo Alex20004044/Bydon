@@ -8,7 +8,7 @@ namespace TestHime
     {
         static public int isAutoTest = 0;
         
-        static public int testCount = 5;
+        static public int testCount = 6;
         public static void Main(string[] args)
         {
             if(isAutoTest == 1)

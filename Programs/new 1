@@ -1,0 +1,43 @@
+big main() << 0	
+	small svar << 1,
+	2 >> svar,
+	print svar,
+	svar << 3,
+	print svar,
+	svar << 3+3,
+	print svar,
+	
+	svar << func(2),
+	print svar,
+	func(3) * 3 >> svar,
+	print svar,
+	
+	big bvar << 0,
+	
+	svar << bvar << 3,
+	print svar,
+	print bvar,
+	
+	bvar << 0,	
+	5 >> svar >> bvar,
+	print svar,
+	print bvar,
+	
+	bvar << 0,
+	normal nvar << 1,
+    svar << bvar >> nvar,
+	print svar,
+	print bvar,
+	print nvar,
+	
+	bvar << 0,
+	nvar << 1,
+	svar << 2,
+    svar >> bvar << nvar,
+	print svar,
+	print bvar,
+	print nvar,
+	
+	return 0.
+small func(small svar << 0) << 0
+	return svar * 2.

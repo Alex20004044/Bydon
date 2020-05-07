@@ -1,0 +1,10 @@
+big main() << 0
+	big fact << factorial(5),
+	print fact,
+	return 0.
+	
+	
+big factorial(big bvar << 1) << 1
+	check bvar <= 1 do
+		return 1.,
+	return bvar * factorial(bvar - 1).

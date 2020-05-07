@@ -12,6 +12,7 @@ namespace TestHime
     {
         Dictionary<string, ASTNode> gloabalFuncTable = new Dictionary<string, ASTNode>();
         Stack<Dictionary<string, VariableType>> functionStack = new Stack<Dictionary<string, VariableType>>();
+        string statemenListCallCountName = "StatementListCallCount";
         bool isReturn = false;
 
         int errorCounter = 1;
@@ -20,8 +21,7 @@ namespace TestHime
         {
             printOutput = _printOutput;
             VariableType result = Process(parseResult.Root);
-            if (_printOutput == null)
-            {
+
                 if (errorCounter == 1)
                 {
                     Console.WriteLine("Succesful compilation");
@@ -31,7 +31,7 @@ namespace TestHime
                     Console.WriteLine("Error compilation");
                 }
                 Console.WriteLine("Result " + result.GetValue());
-            }
+            
         }
         VariableType Process(ASTNode node)
         {
@@ -57,8 +57,8 @@ namespace TestHime
             {
                 VariableType variableType;
                 functionStack.Peek().TryGetValue("return", out variableType);
-                variableType = Process(node.Children[0]);
-                isReturn = true;
+                variableType.SetValue(Process(node.Children[0]).GetValue());
+                isReturn = true; ;
                 return null;
             }
             else if(node.Symbol.ID == BydonLexer.ID.TerminalPrint)
@@ -67,7 +67,7 @@ namespace TestHime
                 return null;
             }
             
-            else if(node.Symbol.ID == BydonParser.ID.VariableVariableAssignRight)
+            else if(node.Symbol.ID == BydonParser.ID.VariableExpAssignRight)
             {
                 VariableType variableType;
                 if (functionStack.Peek().TryGetValue(node.Children[1].Value, out variableType))
@@ -81,7 +81,7 @@ namespace TestHime
                     return null;
                 }
             }
-            else if (node.Symbol.ID == BydonParser.ID.VariableVariableAssignLeft)
+            else if (node.Symbol.ID == BydonParser.ID.VariableExpAssignLeft)
             {
                 VariableType variableType;
                 if (functionStack.Peek().TryGetValue(node.Children[0].Value, out variableType))
@@ -133,6 +133,7 @@ namespace TestHime
                     return null;
                 }
             }
+            //  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             //Create new stack and add default variables
             else if(node.Symbol.ID == BydonParser.ID.VariableFunctionCallArgs)
             {
@@ -150,6 +151,8 @@ namespace TestHime
                 //attention
                 VariableType returnVariable = VariableType.CreateVariable(DefineVariableTypeName(node.Children[0]), Process(node.Children[3]));
                 functionStack.Peek().Add("return", returnVariable);
+                VariableType statementListCallCount = VariableType.CreateVariable(VariableTypeName.big, VariableType.CreateLiteral("0"));
+                functionStack.Peek().Add(statemenListCallCountName, statementListCallCount);
 
                 Process(node.Children[2]);
                 Process(node.Children[4]);
@@ -176,17 +179,39 @@ namespace TestHime
                 }
                 return null;
             }
-
-
+            else if(node.Symbol.ID == BydonParser.ID.VariableCheck)
+            {
+                VariableType condition = Process(node.Children[0]);
+                if(condition.GetValue() != 0)
+                {
+                    Process(node.Children[1]);
+                }
+                return null;
+            }
+            else if (node.Symbol.ID == BydonParser.ID.VariableUntil)
+            {
+                while(VariableType.CreateVariable(VariableTypeName.tiny, Process(node.Children[0])).GetValue() != 0)
+                {
+                    Process(node.Children[1]);
+                }
+                return null;
+            }
             //Statement list process 
             else if (node.Symbol.ID == BydonParser.ID.VariableStatementList)
             {
+                VariableType statementListCallCount;
+                functionStack.Peek().TryGetValue(statemenListCallCountName, out statementListCallCount);
+                statementListCallCount.SetValue(statementListCallCount.GetValue() + 1);
                 for(int i = 0; i < node.Children.Count; i++)
                 {
                     VariableType value = Process(node.Children[i]);
                     if (isReturn)
                     {
-                        isReturn = false;
+                        statementListCallCount.SetValue(statementListCallCount.GetValue() - 1);
+                        if(statementListCallCount.GetValue() == 0)
+                        {
+                            isReturn = false;
+                        }
                         return value;
                     }
                 }

@@ -88,13 +88,17 @@ namespace Bydon
 			/// </summary>
 			public const int TerminalSonar = 0x0012;
 			/// <summary>
+			/// The unique identifier for terminal COMPASS
+			/// </summary>
+			public const int TerminalCompass = 0x0013;
+			/// <summary>
 			/// The unique identifier for terminal PRINT
 			/// </summary>
-			public const int TerminalPrint = 0x0013;
+			public const int TerminalPrint = 0x0014;
 			/// <summary>
 			/// The unique identifier for terminal RETURN
 			/// </summary>
-			public const int TerminalReturn = 0x0014;
+			public const int TerminalReturn = 0x0015;
 		}
 		/// <summary>
 		/// Contains the constant IDs for the contexts for this lexer
@@ -132,24 +136,25 @@ namespace Bydon
 			new Symbol(0x0010, "RL"),
 			new Symbol(0x0011, "RR"),
 			new Symbol(0x0012, "SONAR"),
-			new Symbol(0x0013, "PRINT"),
-			new Symbol(0x0014, "RETURN"),
-			new Symbol(0x0029, "-"),
-			new Symbol(0x002A, "+"),
-			new Symbol(0x002B, "*"),
-			new Symbol(0x002C, "/"),
-			new Symbol(0x002D, "<"),
-			new Symbol(0x002E, ">"),
-			new Symbol(0x002F, "<="),
-			new Symbol(0x0030, ">="),
-			new Symbol(0x0031, "="),
-			new Symbol(0x0032, "<>"),
-			new Symbol(0x0033, "("),
-			new Symbol(0x0034, ")"),
+			new Symbol(0x0013, "COMPASS"),
+			new Symbol(0x0014, "PRINT"),
+			new Symbol(0x0015, "RETURN"),
+			new Symbol(0x002B, "-"),
+			new Symbol(0x002C, "+"),
+			new Symbol(0x002D, "*"),
+			new Symbol(0x002E, "/"),
+			new Symbol(0x002F, "<"),
+			new Symbol(0x0030, ">"),
+			new Symbol(0x0031, "<="),
+			new Symbol(0x0032, ">="),
+			new Symbol(0x0033, "="),
+			new Symbol(0x0034, "<>"),
 			new Symbol(0x0035, ">>"),
 			new Symbol(0x0036, "<<"),
-			new Symbol(0x0039, ","),
-			new Symbol(0x003B, ".") };
+			new Symbol(0x0037, "("),
+			new Symbol(0x0038, ")"),
+			new Symbol(0x003B, ","),
+			new Symbol(0x003D, ".") };
 		/// <summary>
 		/// Initializes a new instance of the lexer
 		/// </summary>

@@ -23,28 +23,30 @@ grammar Bydon
 		
 		DO -> 'do' | 'd';
 		UNTIL -> 'until' | 'unti' | 'unt' | 'un' | 'u';
-		CHECK -> 'check' | 'chec' | 'che' | 'ch' | 'c';
+		CHECK -> 'check' | 'chec' | 'che' | 'ch';
 		
 		GO -> 'go' | 'g';
 		RL -> 'rl';
 		RR -> 'rr';
 		SONAR -> 'sonar' | 'sona' | 'son' | 'so';
+		COMPASS -> 'compass' | 'compas' | 'compa' | 'comp' | 'com' | 'co';
 		
 		PRINT -> 'print';
 		
 		RETURN -> 'return' | 'retur' | 'retu' | 'ret' | 're';
+		
     }
     
     rules
     {
-		
 		function_call -> VARIABLE function_call_args;
+		
 		
         exp_atom -> NUMBER^
 					| VARIABLE^
                     | exp_bracket^
 					| function_call^
-					| variable^;
+					| SONAR^ | GO^ | COMPASS^;
 
 		exp_resatom -> '-'^ exp_atom
 					| '+'^ exp_atom
@@ -64,20 +66,29 @@ grammar Bydon
 					| exp_compare '<='^ exp_term
 					| exp_compare '>='^ exp_term
 					| exp_compare '='^ exp_term
-					| exp_compare '<>'^ exp_term;		
-		exp -> exp_compare^ | SONAR^ | GO^;	
+					| exp_compare '<>'^ exp_term;	
+		exp_assign_right -> exp_compare^
+					| exp_compare '>>'! exp_compare;
+		exp_assign_left -> exp_assign_right^
+					| exp_assign_right '<<'! exp_assign_right;
+		
+		exp -> exp_assign_left^ | function_call^;	
 		exp_bracket -> '('! exp^ ')'!;
 		
-		variable_assign_right -> exp '>>'! (VARIABLE | variable);
-		variable_assign_left -> (VARIABLE | variable)  '<<'! exp;
-		variable -> variable_assign_left^ | variable_assign_right^;
+		variable_init -> variable_type VARIABLE+ '<<'! exp;
+		
+		//variable_assign_right -> exp_atom '>>'! (VARIABLE | variable);
+		//variable_assign_left -> VARIABLE  '<<'! exp;
+
+		//variable -> variable_assign_left^ | variable_assign_right^;
 		
 		function_call_args -> '('! (exp_atom*) ')'! | exp_bracket;
 		
 		variable_type -> TINY^ | SMALL^ | NORMAL^ | BIG^ | FIELD^;	
-		variable_init -> variable_type VARIABLE+ '<<'! exp;
+		
 					
-		statement -> RETURN^ exp | exp ^ | variable_init^ | PRINT^ exp;
+		statement -> RETURN^ exp | exp ^ | variable_init^ | PRINT^ exp | check^ | until^ 
+						| RR^ | RL^ |;
 		statement_list -> (statement ','!)* statement '.'!;
 		
 		parametre -> variable_init^;
@@ -85,6 +96,8 @@ grammar Bydon
 		function_parametres -> '('! parametre* ')'!;
 		
 		function_define -> variable_type VARIABLE function_parametres '<<'! exp_resatom statement_list;	
+		check -> CHECK! exp DO! statement_list;
+		until -> UNTIL! exp DO! statement_list;
 		
 		program -> (function_define+);
     }
