@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputType>Exe</OutputType>
+    <OutputType>library</OutputType>
     <RootNamespace>TestHime</RootNamespace>
     <AssemblyName>TestHime</AssemblyName>
     <!-- change this to netcoreapp2.0 for a .Net Core application -->
@@ -15,6 +15,7 @@
     </ItemGroup>
     <ItemGroup>
         <!-- reference to the .Net runtime for generated parsers -->
-        <PackageReference Include="Hime.Redist" Version="3.4.0"/>
+        <PackageReference Include="Hime.Redist" Version="3.4.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
 </Project>

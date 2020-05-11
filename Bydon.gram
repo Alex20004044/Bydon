@@ -46,7 +46,7 @@ grammar Bydon
 					| VARIABLE^
                     | exp_bracket^
 					| function_call^
-					| SONAR^ | GO^ | COMPASS^;
+					| SONAR^ | GO^ | COMPASS^| RR^ | RL^;
 
 		exp_resatom -> '-'^ exp_atom
 					| '+'^ exp_atom
@@ -87,8 +87,8 @@ grammar Bydon
 		variable_type -> TINY^ | SMALL^ | NORMAL^ | BIG^ | FIELD^;	
 		
 					
-		statement -> RETURN^ exp | exp ^ | variable_init^ | PRINT^ exp | check^ | until^ 
-						| RR^ | RL^ |;
+		statement -> RETURN^ exp | exp ^ | variable_init^ | PRINT^ exp | check^ | until^;
+						
 		statement_list -> (statement ','!)* statement '.'!;
 		
 		parametre -> variable_init^;
@@ -101,5 +101,4 @@ grammar Bydon
 		
 		program -> (function_define+);
     }
-
 }

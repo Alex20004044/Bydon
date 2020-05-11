@@ -1,0 +1,25 @@
+big main() << 0
+	func(A),
+	small svar << 6,
+	normal nvar << 0,
+	until svar do
+		svar << svar -1,
+		nvar << svar,
+		until nvar > 4 do
+			print nvar,
+			nvar << nvar -1.
+		,
+		check svar < 4 do
+			print -svar.
+	.
+.
+	
+	
+tiny func(small svar << 0) << 1
+	small index << 0,
+	until index < svar do
+		index << index + 1,
+		check index / 5 >= 1 do
+			print index.
+		.
+	.

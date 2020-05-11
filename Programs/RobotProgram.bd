@@ -1,53 +1,55 @@
-// Bitmap: forward = 0, lf = 1, rf = 2, lb = 3, rb = 4
-
-big 0 main()
-	//Choose main direction
-	small rots = WhereRotate(compass()),
+big main() << +0
+	small rots << whereRotate(compass),
 	until rots do
 		check rots > 0 do
-			rl(),
+			rl,
 			rots << rots - 1.
 		,
 		check rots < 0 do
-			rr(),
+			rr,
 			rots << rots + 1.
 		.
 	,
-	//Try to find exit
+
 	big counter << +0, 
 	small sonarResult << 0,
-	small isNeedBreak,
-	until 1 do
-		sonarResult = sonar(),
+	small isNeedBreak << +0,
+	
+	big index << 40000,
+	
+	until index do
+		index << index - 1,
+		sonarResult << sonar,
 		isNeedBreak << +0,
-		check Invert(GetBit(sonarResult, 2)) do
+		check invert(getBit(sonarResult 2)) do
 			check counter > 0 do
-				rr(),
+				rr,
 				counter << counter - 1,
 				isNeedBreak << -16.
 			.
 		,
-		//Check is can move forward
-		check Invert(GetBit(sonarResult, 0) + isNeedBreak) do
-			go(),
+
+		check invert((getBit(sonarResult 0) + isNeedBreak)) do
+			go,
 			isNeedBreak << -16.
 		,
-		//Left turn if can't do another action
+
 		check isNeedBreak >= 0 do
-			rl(),
+			rl,
 			counter << counter + 1,
 			isNeedBreak << -16.
 		.
-	.
+	,
+return 0.
 		
 
-tiny Invert(tiny bit << 0)
+tiny invert(tiny bit << 0) << 0
 	check bit do
 		return 0.
 	,
-	return 1.
+return 1.
 
-small 0 GetBit(small a << 0,small number << 0)
+small getBit(small a << 0 small number << 0) << 0
 	check number < 0 do
 		retutn -1.
 	,
@@ -58,10 +60,10 @@ small 0 GetBit(small a << 0,small number << 0)
 		a << a / 2,
 		number << number -1.
 	,
-	retutn IsEvenSmall(a).
+return isEvenSmall(a).
 	
 
-tiny 0 IsEvenSmall(small number << 0)
+tiny isEvenSmall(small number << 0) << 0
 		check number >= 16 do
 			number << number - 16.
 		,
@@ -76,15 +78,15 @@ tiny 0 IsEvenSmall(small number << 0)
 		,
 		
 		check number = 1 do
-			retutn 1.
+			return 1.
 		,
-		retutn 0.
+		return 0.
 		
-normal 0+ MinToDeg(big min << +0)
-	retutn min / 60.
+normal minToDeg(big min << +0) << +0
+	return min / 60.
 
-small 0+ WhereRotate(big min << 0)	
-	small udeg << MinToDeg(+min),
+small whereRotate(big min << 0)	<< +0
+	small udeg << minToDeg(+min),
 	small rots << 0,
 	
 	until udeg >= 60 do
@@ -92,9 +94,9 @@ small 0+ WhereRotate(big min << 0)
 		udeg << udeg - 60.
 	,
 	check min >= 0 do
-		retutn rots.
+		return rots.
 	,
 	check min < 0 do
-		retutn -rots.
+		return -rots.
 	.
 	

@@ -8,7 +8,7 @@ namespace TestHime
     {
         static public int isAutoTest = 0;
         
-        static public int testCount = 6;
+        static public int testCount = 8;
         public static void Main(string[] args)
         {
             if(isAutoTest == 1)
@@ -111,7 +111,12 @@ namespace TestHime
             Print(result.Root, new bool[] { });
 
             BydonInterpreter bydonInterpreter = new BydonInterpreter();
-            bydonInterpreter.Interpret(result);
+            BydonInterpreter.RobotMaze robotMaze = new BydonInterpreter.RobotMaze();
+            robotMaze.Initialize(@"D:\Bydon\Maps\map1.json", @"D:\Bydon\Maps\robot1.json");
+            bydonInterpreter.Interpret(result, null, robotMaze);
+
+            
+
         }
 
         private static void Print(ASTNode node, bool[] crossings)
@@ -129,7 +134,7 @@ namespace TestHime
                 Print(node.Children[i], childCrossings);
             }
         }
-        
+        //
 
     }
 }

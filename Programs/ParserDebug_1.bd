@@ -1,4 +1,4 @@
-big main() << +0
+big main() << -(-0)
 	small rots << whereRotate(compass),
 	until rots do
 		check rots > 0 do
@@ -40,7 +40,7 @@ big main() << +0
 			isNeedBreak << -16.
 		.
 	,
-return 0.
+return -1.
 		
 
 tiny invert(tiny bit << 0) << 0

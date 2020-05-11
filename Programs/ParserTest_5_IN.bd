@@ -29,4 +29,14 @@ big main() << 0
 	
 	print svar1 * svar2 + svar3,
 	
+	svar1 << 1,
+	svar2 << 2,
+	svar3 << 3,
+	
+	svar1 << svar2 >> svar3,
+	
+	print svar1,
+	print svar2,
+	print svar3,
+	
 	return 0.

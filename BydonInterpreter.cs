@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.IO;
 using Hime.Redist;
 using Bydon;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace TestHime
 {
     public class BydonInterpreter
@@ -17,32 +20,42 @@ namespace TestHime
 
         int errorCounter = 1;
         TextWriter printOutput;
-        public void Interpret(ParseResult parseResult, TextWriter _printOutput = null)
+        RobotMaze robotMaze;
+        public void Interpret(ParseResult parseResult, TextWriter _printOutput = null, RobotMaze _robotMaze = null)
         {
+            
             printOutput = _printOutput;
+            
+            if(_robotMaze == null)
+            {
+                robotMaze = new RobotMaze();
+            }
+            else
+            {
+                robotMaze = _robotMaze;
+            }
             VariableType result = Process(parseResult.Root);
 
-                if (errorCounter == 1)
-                {
-                    Console.WriteLine("Succesful compilation");
-                }
-                else
-                {
-                    Console.WriteLine("Error compilation");
-                }
-                Console.WriteLine("Result " + result.GetValue());
-            
+            if (errorCounter == 1)
+            {
+                Console.WriteLine("Succesful compilation");
+            }
+            else
+            {
+                Console.WriteLine("Error compilation");
+            }
+            Console.WriteLine("Result " + result.GetValue());
         }
         VariableType Process(ASTNode node)
         {
-            if(node.Symbol.ID == BydonLexer.ID.TerminalNumber)
+            if (node.Symbol.ID == BydonLexer.ID.TerminalNumber)
             {
                 return VariableType.CreateLiteral(node.Value);
             }
-            else if(node.Symbol.ID == BydonLexer.ID.TerminalVariable)
+            else if (node.Symbol.ID == BydonLexer.ID.TerminalVariable)
             {
                 VariableType variableType;
-                if(functionStack.Peek().TryGetValue(node.Value, out variableType))
+                if (functionStack.Peek().TryGetValue(node.Value, out variableType))
                 {
                     return variableType;
                 }
@@ -58,16 +71,16 @@ namespace TestHime
                 VariableType variableType;
                 functionStack.Peek().TryGetValue("return", out variableType);
                 variableType.SetValue(Process(node.Children[0]).GetValue());
-                isReturn = true; ;
+                isReturn = true;
                 return null;
             }
-            else if(node.Symbol.ID == BydonLexer.ID.TerminalPrint)
+            else if (node.Symbol.ID == BydonLexer.ID.TerminalPrint)
             {
                 PrintFunction(Process(node.Children[0]).GetValue().ToString());
                 return null;
             }
-            
-            else if(node.Symbol.ID == BydonParser.ID.VariableExpAssignRight)
+
+            else if (node.Symbol.ID == BydonParser.ID.VariableExpAssignRight)
             {
                 VariableType variableType;
                 if (functionStack.Peek().TryGetValue(node.Children[1].Value, out variableType))
@@ -97,9 +110,9 @@ namespace TestHime
             }
 
             //Variable construction
-            else if(node.Symbol.ID == BydonParser.ID.VariableVariableInit)
+            else if (node.Symbol.ID == BydonParser.ID.VariableVariableInit)
             {
-                
+
                 VariableType exp = Process(node.Children[node.Children.Count - 1]);
                 for (int i = 1; i < node.Children.Count - 1; i++)
                 {
@@ -122,7 +135,7 @@ namespace TestHime
             else if (node.Symbol.ID == BydonParser.ID.VariableFunctionCall)
             {
                 ASTNode func;
-                if(gloabalFuncTable.TryGetValue(node.Children[0].Value, out func))
+                if (gloabalFuncTable.TryGetValue(node.Children[0].Value, out func))
                 {
                     Process(node.Children[1]);
                     return Process(func);
@@ -135,7 +148,7 @@ namespace TestHime
             }
             //  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             //Create new stack and add default variables
-            else if(node.Symbol.ID == BydonParser.ID.VariableFunctionCallArgs)
+            else if (node.Symbol.ID == BydonParser.ID.VariableFunctionCallArgs)
             {
                 Dictionary<string, VariableType> varDict = new Dictionary<string, VariableType>();
                 for (int i = 0; i < node.Children.Count; i++)
@@ -146,7 +159,7 @@ namespace TestHime
                 return null;
             }
             //Function define
-            else if(node.Symbol.ID == BydonParser.ID.VariableFunctionDefine)
+            else if (node.Symbol.ID == BydonParser.ID.VariableFunctionDefine)
             {
                 //attention
                 VariableType returnVariable = VariableType.CreateVariable(DefineVariableTypeName(node.Children[0]), Process(node.Children[3]));
@@ -159,9 +172,9 @@ namespace TestHime
 
                 return functionStack.Pop()["return"];
             }
-            
 
-            else if(node.Symbol.ID == BydonParser.ID.VariableFunctionParametres)
+
+            else if (node.Symbol.ID == BydonParser.ID.VariableFunctionParametres)
             {
                 Dictionary<string, VariableType> varTable = functionStack.Peek();
                 VariableType variableType;
@@ -170,19 +183,20 @@ namespace TestHime
                 {
                     Process(node.Children[i]);
                     varTable.TryGetValue(node.Children[i].Children[1].Value, out variableType);
-                    if(varTable.TryGetValue((i).ToString(), out stackVar))
+                    if (varTable.TryGetValue((i).ToString(), out stackVar))
                     {
                         variableType.SetValue(stackVar.GetValue());
                         varTable.Remove((i).ToString());
                     }
+                    //Warning
 
                 }
                 return null;
             }
-            else if(node.Symbol.ID == BydonParser.ID.VariableCheck)
+            else if (node.Symbol.ID == BydonParser.ID.VariableCheck)
             {
                 VariableType condition = Process(node.Children[0]);
-                if(condition.GetValue() != 0)
+                if (condition.GetValue() != 0)
                 {
                     Process(node.Children[1]);
                 }
@@ -190,7 +204,7 @@ namespace TestHime
             }
             else if (node.Symbol.ID == BydonParser.ID.VariableUntil)
             {
-                while(VariableType.CreateVariable(VariableTypeName.tiny, Process(node.Children[0])).GetValue() != 0)
+                while (VariableType.CreateVariable(VariableTypeName.tiny, Process(node.Children[0])).GetValue() != 0)
                 {
                     Process(node.Children[1]);
                 }
@@ -202,13 +216,13 @@ namespace TestHime
                 VariableType statementListCallCount;
                 functionStack.Peek().TryGetValue(statemenListCallCountName, out statementListCallCount);
                 statementListCallCount.SetValue(statementListCallCount.GetValue() + 1);
-                for(int i = 0; i < node.Children.Count; i++)
+                for (int i = 0; i < node.Children.Count; i++)
                 {
                     VariableType value = Process(node.Children[i]);
                     if (isReturn)
                     {
                         statementListCallCount.SetValue(statementListCallCount.GetValue() - 1);
-                        if(statementListCallCount.GetValue() == 0)
+                        if (statementListCallCount.GetValue() == 0)
                         {
                             isReturn = false;
                         }
@@ -219,17 +233,17 @@ namespace TestHime
             }
             //Attention
 
-            else if(node.Symbol.ID == BydonParser.ID.VariableProgram)
+            else if (node.Symbol.ID == BydonParser.ID.VariableProgram)
             {
-                for(int i = 0; i < node.Children.Count; i++)
+                for (int i = 0; i < node.Children.Count; i++)
                 {
                     InitFunc(node.Children[i]);
                 }
                 ASTNode funcNode;
-                if(gloabalFuncTable.TryGetValue("main", out funcNode))
+                if (gloabalFuncTable.TryGetValue("main", out funcNode))
                 {
                     functionStack.Push(new Dictionary<string, VariableType>());
-                    VariableType t =  Process(funcNode);
+                    VariableType t = Process(funcNode);
                     return t;
                 }
                 else
@@ -239,13 +253,35 @@ namespace TestHime
                 }
             }
 
+            else if (node.Symbol.ID == BydonLexer.ID.TerminalGo)
+            {
+                return robotMaze.RobotGo();
+            }
+            else if (node.Symbol.ID == BydonLexer.ID.TerminalRr)
+            {
+                return robotMaze.RobotRR();
+            }
+            else if (node.Symbol.ID == BydonLexer.ID.TerminalRl)
+            {
+                return robotMaze.RobotRL();
+            }
+            else if (node.Symbol.ID == BydonLexer.ID.TerminalCompass)
+            {
+                return robotMaze.RobotCompass();
+            }
+            else if (node.Symbol.ID == BydonLexer.ID.TerminalSonar)
+            {
+                return robotMaze.RobotSonar();
+            }
 
             switch (node.Symbol.Name)
             {
                 case "*":
                     {
                         return VariableType.OpMult(Process(node.Children[0]), Process(node.Children[1]));
+#pragma warning disable CS0162 // Обнаружен недостижимый код
                         break;
+#pragma warning restore CS0162 // Обнаружен недостижимый код
                     }
                 case "/":
                     {
@@ -284,7 +320,9 @@ namespace TestHime
                         {
                             return VariableType.OpSub(Process(node.Children[0]), Process(node.Children[1]));
                         }
+#pragma warning disable CS0162 // Обнаружен недостижимый код
                         break;
+#pragma warning restore CS0162 // Обнаружен недостижимый код
                     }
                 case "<":
                     {
@@ -356,16 +394,18 @@ namespace TestHime
             Console.WriteLine("\n\nUnknown character");
             Console.WriteLine(node.ToString() + " " + node.Symbol + " " + node.SymbolType + " " + node.Span + " " + node.Value + " " + node.Context.Content);
             throw new Exception("Unknown character");
+#pragma warning disable CS0162 // Обнаружен недостижимый код
             return null;
+#pragma warning restore CS0162 // Обнаружен недостижимый код
         }
 
-        
+
         public static int Convert32To10(string value)
         {
             int result = 0;
             int add = 0;
             int i;
-            if (value[0] == '-' || value[0]=='+')
+            if (value[0] == '-' || value[0] == '+')
             {
                 i = 1;
             }
@@ -373,13 +413,13 @@ namespace TestHime
             {
                 i = 0;
             }
-            for(; i < value.Length; i++)
+            for (; i < value.Length; i++)
             {
-                if(value[i] >= '0' && value[i] <= '9')
+                if (value[i] >= '0' && value[i] <= '9')
                 {
                     add = int.Parse(value[i].ToString());
                 }
-                else if(value[i] >= 'A' && value[i] <= 'V')
+                else if (value[i] >= 'A' && value[i] <= 'V')
                 {
                     add = value[i] - 'A' + 10;
                 }
@@ -466,7 +506,7 @@ namespace TestHime
             {
                 return VariableTypeName.tiny;
             }
-            else if(node.Symbol.ID == BydonLexer.ID.TerminalSmall)
+            else if (node.Symbol.ID == BydonLexer.ID.TerminalSmall)
             {
                 return VariableTypeName.small;
             }
@@ -474,7 +514,7 @@ namespace TestHime
             {
                 return VariableTypeName.normal;
             }
-            else if(node.Symbol.ID == BydonLexer.ID.TerminalBig)
+            else if (node.Symbol.ID == BydonLexer.ID.TerminalBig)
             {
                 return VariableTypeName.big;
             }
@@ -483,7 +523,9 @@ namespace TestHime
                 return VariableTypeName.field;
             }
             throw new Exception("Try to define unknown type");
-            return VariableTypeName.literal; 
+#pragma warning disable CS0162 // Обнаружен недостижимый код
+            return VariableTypeName.literal;
+#pragma warning restore CS0162 // Обнаружен недостижимый код
         }
 
         void PrintFunction(string exp)
@@ -505,7 +547,7 @@ namespace TestHime
             int value;
             VariableType()
             {
-                
+
             }
             public static VariableType CreateLiteral(string number)
             {
@@ -536,8 +578,8 @@ namespace TestHime
                 variable.TypeName = typeName;
                 variable.isSigned = number.isSigned;
                 variable.SetValue(number.GetValue());
-                return variable;  
-            }        
+                return variable;
+            }
             public bool GetIsSigned()
             {
                 return isSigned;
@@ -553,7 +595,9 @@ namespace TestHime
                     case VariableTypeName.literal:
                         {
                             throw new Exception("Attempt to assign literal");
+#pragma warning disable CS0162 // Обнаружен недостижимый код
                             break;
+#pragma warning restore CS0162 // Обнаружен недостижимый код
                         }
                     case VariableTypeName.tiny:
                         {
@@ -675,7 +719,9 @@ namespace TestHime
                     default:
                         {
                             throw new Exception("Unknown type");
+#pragma warning disable CS0162 // Обнаружен недостижимый код
                             break;
+#pragma warning restore CS0162 // Обнаружен недостижимый код
                         }
                 }
 
@@ -684,7 +730,7 @@ namespace TestHime
             public static VariableType OpSum(VariableType var1, VariableType var2)
             {
                 VariableType variable = new VariableType();
-                if(var1.isSigned || var2.isSigned)
+                if (var1.isSigned || var2.isSigned)
                 {
                     variable.isSigned = true;
                 }
@@ -754,7 +800,7 @@ namespace TestHime
                 VariableType variable = new VariableType();
                 variable.TypeName = VariableTypeName.literal;
                 variable.isSigned = false;
-                if(var1.value >=0)
+                if (var1.value >= 0)
                 {
                     variable.value = var1.value;
                 }
@@ -770,7 +816,7 @@ namespace TestHime
                 variable.TypeName = VariableTypeName.literal;
                 variable.isSigned = true;
                 variable.value = -var1.value;
-                
+
                 return variable;
             }
 
@@ -821,7 +867,7 @@ namespace TestHime
             }
             public static VariableTypeName DefineType(ASTNode node)
             {
-                switch(node.Symbol.ID)
+                switch (node.Symbol.ID)
                 {
                     case BydonLexer.ID.TerminalTiny:
                         {
@@ -881,20 +927,260 @@ namespace TestHime
             }*/
         }
 
-        
+
         public enum VariableTypeName { literal, tiny, small, normal, big, field };
-        public class FunctionType
-        {
-            public VariableType returnVariable;
-            public Dictionary<string, VariableType> localVarTab = new Dictionary<string, VariableType>();
-            public ASTNode functionNode;
-            public string funcName;
-        }
-        
+
+
         void PrintError(string message)
         {
             Console.WriteLine(errorCounter + ")" + message);
             errorCounter++;
+        }
+
+
+        public class RobotMaze
+        {
+
+            public Dictionary<Vector2, CellType> map { get; private set; }
+            public Vector2 exitCell;
+
+            public Vector2 robotPos;
+            public int robotRot;
+
+
+            bool isInitialize = false;
+
+            void Test()
+            {
+                exitCell = new Vector2(1, 1);
+                robotPos = new Vector2(0, 0);
+                robotRot = 0;
+
+                map = new Dictionary<Vector2, CellType>();
+                map.Add(new Vector2(0, 0), CellType.empty);
+                map.Add(new Vector2(1, 0), CellType.empty);
+                map.Add(new Vector2(1, -1), CellType.empty);
+                map.Add(new Vector2(0, 1), CellType.empty);
+                map.Add(new Vector2(1, -2), CellType.empty);
+                string result = JsonConvert.SerializeObject(this);
+
+
+                Console.WriteLine(result);
+            }
+
+
+            public class Cell
+            {
+                public int X { get; set; }
+                public int Y { get; set; }
+                public CellType CellType { get; set; }
+            }
+
+
+
+            public void Initialize(string mapFilePath, string robotFilePath)
+            {
+
+                List<Cell> cells = JsonConvert.DeserializeObject<List<Cell>>(File.ReadAllText(mapFilePath));
+                map = new Dictionary<Vector2, CellType>();
+                foreach (Cell c in cells)
+                {
+                    if(c.CellType == CellType.exit)
+                    {
+                        exitCell = new Vector2(c.X, c.Y);
+                    }
+                    map.Add(new Vector2(c.X, c.Y), c.CellType);
+                }
+                JObject jObject = JObject.Parse(File.ReadAllText(robotFilePath));
+                Vector2 pos = new Vector2();
+                pos.x = jObject.SelectToken("x").Value<int>();
+                pos.y = jObject.SelectToken("y").Value<int>();
+                robotPos = pos;
+                robotRot = jObject.SelectToken("rotation").Value<int>();
+                isInitialize = true;
+            }
+
+            public BydonInterpreter.VariableType RobotRR()
+            {
+                if (isInitialize)
+                {
+                    //Do
+                    robotRot = (robotRot + 1) % 6;
+                    return VariableType.CreateLiteral(1);
+                }
+                else
+                {
+                    return VariableType.CreateLiteral(0);
+                }
+            }
+            public BydonInterpreter.VariableType RobotRL()
+            {
+                if (isInitialize)
+                {
+                    //Do
+                    robotRot = (robotRot + 5) % 6;
+                    return VariableType.CreateLiteral(1);
+                }
+                else
+                {
+                    return VariableType.CreateLiteral(0);
+                }
+            }
+            public BydonInterpreter.VariableType RobotGo()
+            {
+                if (isInitialize)
+                {
+                    //Do
+                    Vector2 newPos = RobotMaze.MapDisplacement(robotPos, robotRot);
+                    switch (GetCellTypeOnNextStep(robotPos, robotRot))
+                    {
+                        case CellType.empty:
+                            {
+                                robotPos = newPos;
+                                return VariableType.CreateLiteral(1);
+#pragma warning disable CS0162 // Обнаружен недостижимый код
+                                break;
+#pragma warning restore CS0162 // Обнаружен недостижимый код
+                            }
+                        case CellType.exit:
+                            {
+                                robotPos = newPos;
+                                //ROBOT WIN!!!!!!!!!!!!!
+                                throw new Exception("ROBOT EXIT");
+#pragma warning disable CS0162 // Обнаружен недостижимый код
+                                return VariableType.CreateLiteral(int.MaxValue);
+#pragma warning restore CS0162 // Обнаружен недостижимый код
+                            }
+                        case CellType.wall:
+                            {
+                                return VariableType.CreateLiteral(0);
+                            }
+                    }
+                    return VariableType.CreateLiteral(int.MinValue);
+                }
+                else
+                {
+                    return VariableType.CreateLiteral(0);
+                }
+            }
+            public BydonInterpreter.VariableType RobotSonar()
+            {
+                // Bitmap: forward = 0, lf = 1, rf = 2, lb = 3, rb = 4
+                if (isInitialize)
+                {
+                    int sonarBits = 0;
+                    if (GetCellTypeOnNextStep(robotPos, robotRot) != CellType.wall)
+                    {
+                        sonarBits = 1;
+                    }
+                    else if (GetCellTypeOnNextStep(robotPos, (robotRot + 5) % 6) != CellType.wall)
+                    {
+                        sonarBits += 2;
+                    }
+                    else if (GetCellTypeOnNextStep(robotPos, (robotRot + 1) % 6) != CellType.wall)
+                    {
+                        sonarBits += 4;
+                    }
+                    else if (GetCellTypeOnNextStep(robotPos, (robotRot + 4) % 6) != CellType.wall)
+                    {
+                        sonarBits += 8;
+                    }
+                    else if (GetCellTypeOnNextStep(robotPos, (robotRot + 2) % 6) != CellType.wall)
+                    {
+                        sonarBits += 16;
+                    }
+                    return VariableType.CreateLiteral(sonarBits);
+                }
+                else
+                {
+                    return VariableType.CreateLiteral(0);
+                }
+
+            }
+            public BydonInterpreter.VariableType RobotCompass()
+            {
+                if (isInitialize)
+                {
+                    //Do
+                    Vector2 dirToExit = new Vector2();
+                    dirToExit.x = exitCell.x - robotPos.x;
+                    dirToExit.y = exitCell.y - robotPos.y;
+
+                    double rot = Math.Acos(dirToExit.x);
+                    return VariableType.CreateLiteral(-1);
+                }
+                else
+                {
+                    return VariableType.CreateLiteral(0);
+                }
+
+            }
+            [Serializable]
+            public enum CellType { empty, wall, exit };
+            static Vector2 MapDisplacement(Vector2 position, int direction)
+            {
+                Vector2 disp = new Vector2();
+
+                if (direction == 0)
+                {
+                    disp.y = position.y + 1;
+                    disp.x = position.x;
+                }
+                else if (direction == 1)
+                {
+                    disp.y = position.y;
+                    disp.x = position.x + 1;
+                }
+                else if (direction == 2)
+                {
+                    disp.y = position.y - 1;
+                    disp.x = position.x + 1;
+                }
+                else if (direction == 3)
+                {
+                    disp.y = position.y - 1;
+                    disp.x = position.x;
+                }
+                else if (direction == 4)
+                {
+                    disp.y = position.y;
+                    disp.x = position.x - 1;
+                }
+                else if (direction == 5)
+                {
+                    disp.y = position.y + 1;
+                    disp.x = position.x - 1;
+                }
+                return disp;
+            }
+            [Serializable]
+            public struct Vector2
+            {
+                public int x;
+                public int y;
+                public Vector2(int _x, int _y)
+                {
+                    x = _x;
+                    y = _y;
+                }
+                public override string ToString()
+                {
+                    return '(' + x.ToString() + ' ' + y.ToString() + ')';
+                }
+            }
+            CellType GetCellTypeOnNextStep(Vector2 currentPos, int rot)
+            {
+                Vector2 pos = MapDisplacement(currentPos, rot);
+                CellType cellType;
+                if(map.TryGetValue(pos, out cellType))
+                {
+                    return cellType;
+                }
+                else
+                {
+                    return CellType.wall;
+                }
+            }
         }
     }
 }

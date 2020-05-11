@@ -1,0 +1,10 @@
+D:\Bydon\bin\Release\net461\TestHime.exe.config
+D:\Bydon\bin\Release\net461\TestHime.exe
+D:\Bydon\bin\Release\net461\TestHime.pdb
+D:\Bydon\bin\Release\net461\Hime.Redist.dll
+D:\Bydon\bin\Release\net461\Newtonsoft.Json.dll
+D:\Bydon\obj\Release\net461\RobotProject.AssemblyInfoInputs.cache
+D:\Bydon\obj\Release\net461\RobotProject.AssemblyInfo.cs
+D:\Bydon\obj\Release\net461\RobotProject.csproj.CopyComplete
+D:\Bydon\obj\Release\net461\TestHime.exe
+D:\Bydon\obj\Release\net461\TestHime.pdb
