@@ -41,12 +41,12 @@ grammar Bydon
     {
 		function_call -> VARIABLE function_call_args;
 		
-		
         exp_atom -> NUMBER^
 					| VARIABLE^
                     | exp_bracket^
 					| function_call^
-					| SONAR^ | GO^ | COMPASS^| RR^ | RL^;
+					| SONAR^ | GO^ | COMPASS^| RR^ | RL^
+					| indexator^;
 
 		exp_resatom -> '-'^ exp_atom
 					| '+'^ exp_atom
@@ -75,27 +75,27 @@ grammar Bydon
 		exp -> exp_assign_left^ | function_call^;	
 		exp_bracket -> '('! exp^ ')'!;
 		
+		field_init -> FIELD! variable_type variable_type VARIABLE+ '<<'! exp;
 		variable_init -> variable_type VARIABLE+ '<<'! exp;
 		
-		//variable_assign_right -> exp_atom '>>'! (VARIABLE | variable);
-		//variable_assign_left -> VARIABLE  '<<'! exp;
-
-		//variable -> variable_assign_left^ | variable_assign_right^;
+		indexator -> VARIABLE '['! exp_atom exp_atom ']'!;
 		
 		function_call_args -> '('! (exp_atom*) ')'! | exp_bracket;
 		
-		variable_type -> TINY^ | SMALL^ | NORMAL^ | BIG^ | FIELD^;	
+		variable_type -> TINY^ | SMALL^ | NORMAL^ | BIG^;	
 		
 					
-		statement -> RETURN^ exp | exp ^ | variable_init^ | PRINT^ exp | check^ | until^;
+		statement -> RETURN^ exp | exp ^ | variable_init^ | field_init^| PRINT^ exp | check^ | until^;
 						
 		statement_list -> (statement ','!)* statement '.'!;
 		
-		parametre -> variable_init^;
+		parametre -> variable_init^ | field_init^;
 		
 		function_parametres -> '('! parametre* ')'!;
-		
-		function_define -> variable_type VARIABLE function_parametres '<<'! exp_resatom statement_list;	
+		function_define_variable -> variable_type VARIABLE function_parametres '<<'! exp_resatom statement_list;
+		function_define_field -> FIELD! variable_type variable_type VARIABLE function_parametres '<<'! exp_resatom statement_list;	
+		function_define -> function_define_field^ | function_define_variable^;
+					
 		check -> CHECK! exp DO! statement_list;
 		until -> UNTIL! exp DO! statement_list;
 		

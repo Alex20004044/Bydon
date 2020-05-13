@@ -1,0 +1,24 @@
+big main() << 0
+	field tiny tiny tvar1 tvar2 << 0,
+	print tvar1[0 0],
+	tvar2[0 0] << 1,
+	print tvar2[0 0],
+	tvar1 << tvar2,
+	print tvar2[0 0],
+	
+	tvar2[0 0] << 1,
+	print func(tvar2[0 0] + 5), 
+	
+	field small small fvar2 << 0,
+	fvar2 << arrayFunc(fvar2),
+	print fvar2[0 0],
+	print fvar2[1 0],
+	field small small test1 test2 << A,
+	
+return 0.
+
+big func(big bvar << 1 ) << 1
+	return bvar.
+field normal normal arrayFunc(field normal normal array << A) << 0
+	array[0 0] << 100,
+	return array.

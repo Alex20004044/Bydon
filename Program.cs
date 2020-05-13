@@ -8,7 +8,7 @@ namespace TestHime
     {
         static public int isAutoTest = 0;
         
-        static public int testCount = 8;
+        static public int testCount = 9;
         public static void Main(string[] args)
         {
             if(isAutoTest == 1)
@@ -107,34 +107,16 @@ namespace TestHime
             // Executes the parsing
             ParseResult result = parser.Parse();
             streamReader.Close();
-            // Prints the produced syntax tree
-            Print(result.Root, new bool[] { });
+
 
             BydonInterpreter bydonInterpreter = new BydonInterpreter();
             BydonInterpreter.RobotMaze robotMaze = new BydonInterpreter.RobotMaze();
-            robotMaze.Initialize(@"D:\Bydon\Maps\map1.json", @"D:\Bydon\Maps\robot1.json");
-            bydonInterpreter.Interpret(result, null, robotMaze);
 
-            
-
+            robotMaze.Initialize(2);
+            //bydonInterpreter.Interpret(result, null, robotMaze, true);
+            bydonInterpreter.Interpret(result, null, null, true);
         }
 
-        private static void Print(ASTNode node, bool[] crossings)
-        {
-            for (int i = 0; i < crossings.Length - 1; i++)
-                Console.Write(crossings[i] ? "|   " : "    ");
-            if (crossings.Length > 0)
-                Console.Write("+-> ");
-            Console.WriteLine(node.ToString());// + " " + node.Symbol + " " + node.SymbolType + " " + node.Span + " " + node.Value + " " + node.Context.Content);
-            for (int i = 0; i != node.Children.Count; i++)
-            {
-                bool[] childCrossings = new bool[crossings.Length + 1];
-                Array.Copy(crossings, childCrossings, crossings.Length);
-                childCrossings[childCrossings.Length - 1] = (i < node.Children.Count - 1);
-                Print(node.Children[i], childCrossings);
-            }
-        }
-        //
-
+        
     }
 }

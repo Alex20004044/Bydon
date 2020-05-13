@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputType>library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>TestHime</RootNamespace>
     <AssemblyName>TestHime</AssemblyName>
     <!-- change this to netcoreapp2.0 for a .Net Core application -->
@@ -18,4 +18,5 @@
         <PackageReference Include="Hime.Redist" Version="3.4.0" />
         <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
+    <ProjectExtensions><VisualStudio><UserProperties maps_40_3map_1json__JsonSchema="http://json-schema.org/draft-04/schema" /></VisualStudio></ProjectExtensions>
 </Project>

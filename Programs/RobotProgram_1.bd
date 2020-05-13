@@ -1,0 +1,94 @@
+big main() << -(-5)	
+	big counter << -(-0), 
+	small sonarResult << 0,
+	small isNeedBreak << -(-0),
+	
+	big index << 40000,
+	tiny bit2 << 0,
+	until index do
+		index << index - 1,
+		sonarResult << sonar,
+		
+		print sonarResult,
+		
+		isNeedBreak << 0,
+		
+		bit2 << getBit(sonarResult 2),
+		print bit2,
+		
+		check invert(getBit(sonarResult 2)) do
+			check counter > 0 do
+				rr,
+				counter << counter - 1,
+				isNeedBreak << -16.
+			.
+		,
+
+		check invert((getBit(sonarResult 0)) + isNeedBreak) do
+			go,
+			isNeedBreak << -16.
+		,
+
+		check isNeedBreak >= 0 do
+			rl,
+			counter << counter + 1,
+			isNeedBreak << -16.
+		.
+	,	
+return -1.
+		
+tiny invert(tiny bit << 0) << 0
+	check bit do
+		return 0.
+	,
+return 1.
+
+small getBit(small a << 0 small number << 0) << -0
+	check (number < 0) + (number >= 5) do
+		return -1.
+	,
+	
+	until number > 0 do
+		a << a / 2,
+		number << number -1.
+	,
+return isNotEvenSmall(a).
+
+tiny isEvenSmall(small number << 0) << 0
+	check number >= G do
+		number << number - G.
+	,
+	check number >= 8 do
+		number << number - 8.
+	,
+	check number >= 4 do
+		number << number - 4.
+	,
+	check number >= 2 do
+		number << number - 2.
+	,
+
+	check number = 1 do
+		return 0.
+	,
+return 1.
+
+tiny isNotEvenSmall(small number << 0) << 0
+	check number >= G do
+		number << number - G.
+	,
+	check number >= 8 do
+		number << number - 8.
+	,
+	check number >= 4 do
+		number << number - 4.
+	,
+	check number >= 2 do
+		number << number - 2.
+	,
+
+	check number = 1 do
+		return 1.
+	,
+return 0.
+	

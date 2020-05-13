@@ -10,9 +10,9 @@
     "CellType": 0
   },
   {
-    "X": 1,
+    "X": 0,
     "Y": -1,
-    "CellType": 1
+    "CellType": 0
   },
   {
     "X": 2,
@@ -20,9 +20,9 @@
     "CellType": 0
   },
   {
-    "X": 0,
+    "X": 1,
     "Y": -1,
-    "CellType": 0
+    "CellType": 1
   },
   {
     "X": 1,

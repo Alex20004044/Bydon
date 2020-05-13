@@ -63,49 +63,65 @@ namespace Bydon
 			/// </summary>
 			public const int VariableExpBracket = 0x001F;
 			/// <summary>
+			/// The unique identifier for variable field_init
+			/// </summary>
+			public const int VariableFieldInit = 0x0020;
+			/// <summary>
 			/// The unique identifier for variable variable_init
 			/// </summary>
-			public const int VariableVariableInit = 0x0020;
+			public const int VariableVariableInit = 0x0021;
+			/// <summary>
+			/// The unique identifier for variable indexator
+			/// </summary>
+			public const int VariableIndexator = 0x0022;
 			/// <summary>
 			/// The unique identifier for variable function_call_args
 			/// </summary>
-			public const int VariableFunctionCallArgs = 0x0021;
+			public const int VariableFunctionCallArgs = 0x0023;
 			/// <summary>
 			/// The unique identifier for variable variable_type
 			/// </summary>
-			public const int VariableVariableType = 0x0022;
+			public const int VariableVariableType = 0x0024;
 			/// <summary>
 			/// The unique identifier for variable statement
 			/// </summary>
-			public const int VariableStatement = 0x0023;
+			public const int VariableStatement = 0x0025;
 			/// <summary>
 			/// The unique identifier for variable statement_list
 			/// </summary>
-			public const int VariableStatementList = 0x0024;
+			public const int VariableStatementList = 0x0026;
 			/// <summary>
 			/// The unique identifier for variable parametre
 			/// </summary>
-			public const int VariableParametre = 0x0025;
+			public const int VariableParametre = 0x0027;
 			/// <summary>
 			/// The unique identifier for variable function_parametres
 			/// </summary>
-			public const int VariableFunctionParametres = 0x0026;
+			public const int VariableFunctionParametres = 0x0028;
+			/// <summary>
+			/// The unique identifier for variable function_define_variable
+			/// </summary>
+			public const int VariableFunctionDefineVariable = 0x0029;
+			/// <summary>
+			/// The unique identifier for variable function_define_field
+			/// </summary>
+			public const int VariableFunctionDefineField = 0x002A;
 			/// <summary>
 			/// The unique identifier for variable function_define
 			/// </summary>
-			public const int VariableFunctionDefine = 0x0027;
+			public const int VariableFunctionDefine = 0x002B;
 			/// <summary>
 			/// The unique identifier for variable check
 			/// </summary>
-			public const int VariableCheck = 0x0028;
+			public const int VariableCheck = 0x002C;
 			/// <summary>
 			/// The unique identifier for variable until
 			/// </summary>
-			public const int VariableUntil = 0x0029;
+			public const int VariableUntil = 0x002D;
 			/// <summary>
 			/// The unique identifier for variable program
 			/// </summary>
-			public const int VariableProgram = 0x002A;
+			public const int VariableProgram = 0x002E;
 		}
 		/// <summary>
 		/// The collection of variables matched by this parser
@@ -125,23 +141,28 @@ namespace Bydon
 			new Symbol(0x001D, "exp_assign_left"), 
 			new Symbol(0x001E, "exp"), 
 			new Symbol(0x001F, "exp_bracket"), 
-			new Symbol(0x0020, "variable_init"), 
-			new Symbol(0x0021, "function_call_args"), 
-			new Symbol(0x0022, "variable_type"), 
-			new Symbol(0x0023, "statement"), 
-			new Symbol(0x0024, "statement_list"), 
-			new Symbol(0x0025, "parametre"), 
-			new Symbol(0x0026, "function_parametres"), 
-			new Symbol(0x0027, "function_define"), 
-			new Symbol(0x0028, "check"), 
-			new Symbol(0x0029, "until"), 
-			new Symbol(0x002A, "program"), 
-			new Symbol(0x0039, "__V57"), 
-			new Symbol(0x003A, "__V58"), 
-			new Symbol(0x003C, "__V60"), 
+			new Symbol(0x0020, "field_init"), 
+			new Symbol(0x0021, "variable_init"), 
+			new Symbol(0x0022, "indexator"), 
+			new Symbol(0x0023, "function_call_args"), 
+			new Symbol(0x0024, "variable_type"), 
+			new Symbol(0x0025, "statement"), 
+			new Symbol(0x0026, "statement_list"), 
+			new Symbol(0x0027, "parametre"), 
+			new Symbol(0x0028, "function_parametres"), 
+			new Symbol(0x0029, "function_define_variable"), 
+			new Symbol(0x002A, "function_define_field"), 
+			new Symbol(0x002B, "function_define"), 
+			new Symbol(0x002C, "check"), 
+			new Symbol(0x002D, "until"), 
+			new Symbol(0x002E, "program"), 
+			new Symbol(0x003D, "__V61"), 
 			new Symbol(0x003E, "__V62"), 
-			new Symbol(0x003F, "__V63"), 
-			new Symbol(0x0040, "__VAxiom") };
+			new Symbol(0x0041, "__V65"), 
+			new Symbol(0x0043, "__V67"), 
+			new Symbol(0x0045, "__V69"), 
+			new Symbol(0x0046, "__V70"), 
+			new Symbol(0x0047, "__VAxiom") };
 		/// <summary>
 		/// The collection of virtuals matched by this parser
 		/// </summary>
@@ -191,13 +212,17 @@ namespace Bydon
 			public virtual void OnVariableExpAssignLeft(ASTNode node) {}
 			public virtual void OnVariableExp(ASTNode node) {}
 			public virtual void OnVariableExpBracket(ASTNode node) {}
+			public virtual void OnVariableFieldInit(ASTNode node) {}
 			public virtual void OnVariableVariableInit(ASTNode node) {}
+			public virtual void OnVariableIndexator(ASTNode node) {}
 			public virtual void OnVariableFunctionCallArgs(ASTNode node) {}
 			public virtual void OnVariableVariableType(ASTNode node) {}
 			public virtual void OnVariableStatement(ASTNode node) {}
 			public virtual void OnVariableStatementList(ASTNode node) {}
 			public virtual void OnVariableParametre(ASTNode node) {}
 			public virtual void OnVariableFunctionParametres(ASTNode node) {}
+			public virtual void OnVariableFunctionDefineVariable(ASTNode node) {}
+			public virtual void OnVariableFunctionDefineField(ASTNode node) {}
 			public virtual void OnVariableFunctionDefine(ASTNode node) {}
 			public virtual void OnVariableCheck(ASTNode node) {}
 			public virtual void OnVariableUntil(ASTNode node) {}
@@ -250,17 +275,21 @@ namespace Bydon
 				case 0x001D: visitor.OnVariableExpAssignLeft(node); break;
 				case 0x001E: visitor.OnVariableExp(node); break;
 				case 0x001F: visitor.OnVariableExpBracket(node); break;
-				case 0x0020: visitor.OnVariableVariableInit(node); break;
-				case 0x0021: visitor.OnVariableFunctionCallArgs(node); break;
-				case 0x0022: visitor.OnVariableVariableType(node); break;
-				case 0x0023: visitor.OnVariableStatement(node); break;
-				case 0x0024: visitor.OnVariableStatementList(node); break;
-				case 0x0025: visitor.OnVariableParametre(node); break;
-				case 0x0026: visitor.OnVariableFunctionParametres(node); break;
-				case 0x0027: visitor.OnVariableFunctionDefine(node); break;
-				case 0x0028: visitor.OnVariableCheck(node); break;
-				case 0x0029: visitor.OnVariableUntil(node); break;
-				case 0x002A: visitor.OnVariableProgram(node); break;
+				case 0x0020: visitor.OnVariableFieldInit(node); break;
+				case 0x0021: visitor.OnVariableVariableInit(node); break;
+				case 0x0022: visitor.OnVariableIndexator(node); break;
+				case 0x0023: visitor.OnVariableFunctionCallArgs(node); break;
+				case 0x0024: visitor.OnVariableVariableType(node); break;
+				case 0x0025: visitor.OnVariableStatement(node); break;
+				case 0x0026: visitor.OnVariableStatementList(node); break;
+				case 0x0027: visitor.OnVariableParametre(node); break;
+				case 0x0028: visitor.OnVariableFunctionParametres(node); break;
+				case 0x0029: visitor.OnVariableFunctionDefineVariable(node); break;
+				case 0x002A: visitor.OnVariableFunctionDefineField(node); break;
+				case 0x002B: visitor.OnVariableFunctionDefine(node); break;
+				case 0x002C: visitor.OnVariableCheck(node); break;
+				case 0x002D: visitor.OnVariableUntil(node); break;
+				case 0x002E: visitor.OnVariableProgram(node); break;
 			}
 		}
 	}

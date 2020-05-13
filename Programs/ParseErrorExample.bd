@@ -1,0 +1,60 @@
+big main() << -(-5)	
+
+	&,small svar == 0,
+	$,
+return -1.
+		
+tiny invert(tiny bit << 0) << 0
+	check bit do
+		return 0.
+	,
+return 1.
+
+small getBit(small a << 0 small number << 0) << -0
+	check (number < 0) + (number >= 5) do
+		return -1.
+	,
+	
+	until number > 0 do
+		a << a / 2,
+		number << number -1.
+	,
+return isNotEvenSmall(a).
+
+tiny isEvenSmall(small number << 0) << 0
+	check number >= G do
+		number << number - G.
+	,
+	check number >= 8 do
+		number << number - 8.
+	,
+	check number >= 4 do
+		number << number - 4.
+	,
+	check number >= 2 do
+		number << number - 2.
+	,
+
+	check number = 1 do
+		return 0.
+	,
+return 1.
+
+tiny isNotEvenSmall(small number << 0) << 0
+	check number >= G do
+		number << number - G.
+	,
+	check number >= 8 do
+		number << number - 8.
+	,
+	check number >= 4 do
+		number << number - 4.
+	,
+	check number >= 2 do
+		number << number - 2.
+	,
+
+	check number = 1 do
+		return 1.
+	,
+return 0.
