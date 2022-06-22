@@ -16,7 +16,7 @@
     <ItemGroup>
         <!-- reference to the .Net runtime for generated parsers -->
         <PackageReference Include="Hime.Redist" Version="3.4.0" />
-        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
     <ProjectExtensions><VisualStudio><UserProperties maps_40_3map_1json__JsonSchema="http://json-schema.org/draft-04/schema" /></VisualStudio></ProjectExtensions>
 </Project>
