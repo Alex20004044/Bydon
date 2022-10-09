@@ -1,2 +1,2 @@
 # Bydon
-Interpreter development
+A simple programming language interpreter
